@@ -64,6 +64,15 @@ npm run serve
 
 ## GitHub Pages
 
-Repo Settings → Pages → Source 選 **GitHub Actions**。merge 去 `main` 之後會自動 deploy。
+正確網址係 **project site**，唔係帳戶根網址：
 
-網址：<https://irrcookie.github.io/bodyfitnees/>
+- 用呢個：<https://irrcookie.github.io/bodyfitnees/>
+- 唔好用：`https://irrcookie.github.io/`（呢個會 404，因為 repo 名唔係 `irrcookie.github.io`）
+
+第一次要開 Pages：
+
+1. GitHub repo → **Settings → Pages**
+2. Build and deployment → Source 選 **GitHub Actions**
+3. 等 `GitHub Pages` workflow 變綠色
+4. 用 Safari 打開上面嗰條 **bodyfitnees** 網址 → 分享 → 加入主畫面
+
