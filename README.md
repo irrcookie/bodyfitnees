@@ -1,0 +1,69 @@
+# 身體管理
+
+Kp 嘅身體／飲食／訓練儀表板。資料全部放喺 Git 入面嘅 JSON（`db/`），網站用 GitHub Pages，專為 **iPhone 16 Pro Max 加入主畫面**。
+
+介面同 bot 回覆用 **香港粵語（繁體）**。風格：dark further + tech blue。
+
+## 三個 schema
+
+| 用途 | Schema | 數據 |
+|---|---|---|
+| 飲食熱量 | `db/schema/food.schema.json` | `db/food.json` |
+| 身體（小米） | `db/schema/body.schema.json` | `db/body.json` |
+| 訓練 | `db/schema/fitness.schema.json` | `db/fitness.json` |
+
+另外：`db/profile.json`（170cm／28歲／11月肌肉型目標）、`db/coach.json`（每日建議）。
+
+## 點樣同我溝通（Cursor 對話）
+
+直接喺呢個 chat 傳：
+
+1. **小米體脂截圖** → 我 OCR 之後寫入 `db/body.json`
+2. **飯餐相或文字**（「午餐雞胸 200g 650kcal」）→ `db/food.json`
+3. **訓練內容** → `db/fitness.json`
+
+寫完會 commit 去 GitHub，dashboard 自動更新。
+
+亦可以喺 GitHub 開 Issue 表單（飲食／訓練），`ingest` bot 會入庫。
+
+## iPhone 加入主畫面
+
+1. 用 **Safari** 打開 GitHub Pages
+2. 分享 → **加入主畫面**
+3. 主畫面開「身體管理」：全畫面、避開 Dynamic Island 同底部橫條
+
+設定入面可以：
+
+- 下載 `reminders.ics`，加入 Apple 日曆（每日 09:30／13:30／20:00）
+- 開瀏覽器通知（要加咗主畫面先穩）
+- 可選填 GitHub token，由手機直接寫入 DB
+
+## 提醒 bot
+
+GitHub Actions 每日 **09:30、13:30、20:00（香港時間）** 會喺「飲食打卡提醒」Issue 留言。Watch 呢個 repo 就會收到 GitHub 通知／電郵。
+
+同時請加入日曆檔，iPhone 鎖定畫面會準時彈。
+
+## 教練同目標（2026-11-01 前）
+
+- 體重守約 **72kg**（唔跟小米 63kg 標準體重）
+- 體脂 **22.7% → 15%**
+- 肌肉量 **53.3kg → 58kg**
+- 每日蛋白 160g、熱量約 2200kcal、每週 5 堂力量
+
+每日朝早 bot 會根據最新 DB 寫一則粵語建議到 `db/coach.json`。
+
+## 本機
+
+```bash
+npm test
+npm run serve
+```
+
+瀏覽器打開 `http://127.0.0.1:4173`
+
+## GitHub Pages
+
+Repo Settings → Pages → Source 選 **GitHub Actions**。merge 去 `main` 之後會自動 deploy。
+
+網址：<https://irrcookie.github.io/bodyfitnees/>

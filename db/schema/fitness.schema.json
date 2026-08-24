@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://irrcookie.github.io/bodyfitnees/db/schema/fitness.schema.json",
+  "title": "訓練紀錄",
+  "description": "力量、有氧同運動紀錄。Git 內 JSON 即資料庫。",
+  "type": "object",
+  "required": ["version", "records"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fitnessRecord" }
+    }
+  },
+  "$defs": {
+    "exercise": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "sets": { "type": ["integer", "null"] },
+        "reps": { "type": ["integer", "string", "null"] },
+        "weightKg": { "type": ["number", "null"] },
+        "durationMin": { "type": ["number", "null"] },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "fitnessRecord": {
+      "type": "object",
+      "required": ["id", "trainedAt", "type", "title", "source"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "trainedAt": { "type": "string" },
+        "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "type": { "type": "string", "enum": ["strength", "cardio", "sports", "mobility", "other"] },
+        "title": { "type": "string", "minLength": 1 },
+        "durationMin": { "type": ["number", "null"] },
+        "kcalBurned": { "type": ["number", "null"] },
+        "exercises": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/exercise" }
+        },
+        "muscleGroups": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rpe": { "type": ["number", "null"], "minimum": 1, "maximum": 10 },
+        "source": { "type": "string", "enum": ["chat", "ocr", "manual", "issue", "app"] },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

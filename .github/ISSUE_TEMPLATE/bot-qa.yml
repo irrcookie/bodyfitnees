@@ -1,0 +1,12 @@
+name: Bot QA UI
+description: 叫 QA bot 檢查 iPhone UI
+title: "bot-qa：檢查 UI"
+labels: ["bot-qa"]
+body:
+  - type: textarea
+    id: scope
+    attributes:
+      label: 檢查範圍
+      value: |
+        跑 npm test 同 node scripts/qa-ui.mjs。
+        確認 iPhone 16 Pro Max：safe area、tabbar、粵語、dark further、tech blue、加入主畫面。

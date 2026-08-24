@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-24T16:21:00+08:00",
+  "name": "Kp",
+  "displayName": "Kp",
+  "heightCm": 170,
+  "age": 28,
+  "sex": "male",
+  "timezone": "Asia/Hong_Kong",
+  "locale": "zh-HK",
+  "github": {
+    "owner": "irrcookie",
+    "repo": "bodyfitnees",
+    "branch": "main",
+    "pagesUrl": "https://irrcookie.github.io/bodyfitnees/"
+  },
+  "goal": {
+    "title": "11月前成為肌肉型男性",
+    "deadline": "2026-11-01",
+    "style": "muscular",
+    "targetWeightKg": 72,
+    "targetBodyFatPercent": 15,
+    "targetMuscleMassKg": 58,
+    "targetFatMassKg": 10.8,
+    "targetFatFreeMassKg": 61.2,
+    "targetVisceralFat": 8,
+    "notes": "體重大約維持 72kg，做增肌減脂：體脂由 22.7% 降至約 15%，肌肉量同去脂體重向上。小米標準體重 63kg 唔適用喺肌肉型目標。"
+  },
+  "nutrition": {
+    "kcalTarget": 2200,
+    "proteinG": 160,
+    "carbG": 220,
+    "fatG": 70,
+    "meals": [
+      { "id": "breakfast", "label": "早餐", "remindAt": "09:30", "kcalShare": 0.25 },
+      { "id": "lunch", "label": "午餐", "remindAt": "13:30", "kcalShare": 0.35 },
+      { "id": "dinner", "label": "晚餐", "remindAt": "20:00", "kcalShare": 0.3 },
+      { "id": "snack", "label": "小食", "remindAt": null, "kcalShare": 0.1 }
+    ]
+  },
+  "training": {
+    "sessionsPerWeek": 5,
+    "split": [
+      { "weekday": 1, "title": "上肢推力", "focus": "胸、肩、三頭" },
+      { "weekday": 2, "title": "下肢", "focus": "股四頭、臀、腿後" },
+      { "weekday": 3, "title": "主動恢復", "focus": "步行／伸展" },
+      { "weekday": 4, "title": "上肢拉力", "focus": "背、二頭" },
+      { "weekday": 5, "title": "下肢＋核心", "focus": "腿、腹" },
+      { "weekday": 6, "title": "弱項或全身", "focus": "肩、手臂或有氧" },
+      { "weekday": 0, "title": "休息", "focus": "睡眠同蛋白質" }
+    ]
+  }
+}

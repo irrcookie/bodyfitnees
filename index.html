@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0B0B0F" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="身體管理" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>身體管理</title>
+    <meta
+      name="description"
+      content="Kp 嘅身體、飲食同訓練儀表板。GitHub JSON 資料庫，專為 iPhone 主畫面 Web App 而設。"
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-32.png" />
+    <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/app.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <header class="topbar">
+        <div class="topbar-row">
+          <div>
+            <p class="eyebrow" id="greeting">載入緊</p>
+            <h1 class="brand" id="brandTitle">身體管理</h1>
+          </div>
+          <button class="icon-btn" id="settingsBtn" type="button" aria-label="設定">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <div class="goal-strip" id="goalStrip"></div>
+      </header>
+
+      <main class="screen" id="screen"></main>
+
+      <nav class="tabbar" aria-label="主導覽">
+        <a href="#/" data-route="home" class="tab is-active">
+          <i data-icon="home"></i><span>總覽</span>
+        </a>
+        <a href="#/body" data-route="body" class="tab">
+          <i data-icon="body"></i><span>身體</span>
+        </a>
+        <a href="#/food" data-route="food" class="tab">
+          <i data-icon="food"></i><span>飲食</span>
+        </a>
+        <a href="#/train" data-route="train" class="tab">
+          <i data-icon="train"></i><span>訓練</span>
+        </a>
+        <a href="#/coach" data-route="coach" class="tab">
+          <i data-icon="coach"></i><span>教練</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sheet" id="sheet" hidden>
+      <div class="sheet-backdrop" data-close-sheet></div>
+      <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <div class="sheet-handle"></div>
+        <h2 id="sheetTitle">設定</h2>
+        <div id="sheetBody"></div>
+      </div>
+    </div>
+
+    <script type="module" src="./assets/js/app.js"></script>
+  </body>
+</html>

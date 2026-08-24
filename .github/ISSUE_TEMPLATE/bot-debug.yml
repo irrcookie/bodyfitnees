@@ -1,0 +1,12 @@
+name: Bot Debug
+description: 叫 debug bot 查錯
+title: "bot-debug："
+labels: ["bot-debug"]
+body:
+  - type: textarea
+    id: bug
+    attributes:
+      label: 發生咩事
+      placeholder: 邊個畫面、預期、實際、iPhone 16 Pro Max standalone 定 Safari
+    validations:
+      required: true
