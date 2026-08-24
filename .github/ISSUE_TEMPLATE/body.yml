@@ -1,0 +1,13 @@
+name: 身體紀錄
+description: 貼小米體脂報告，等 Cursor／bot OCR 入庫
+title: "身體：小米報告"
+labels: ["body", "ocr"]
+body:
+  - type: textarea
+    id: notes
+    attributes:
+      label: 說明
+      description: 請喺呢個 Issue 或者 Cursor 對話上傳小米人體成分截圖。
+      placeholder: 今日量磅，截圖見附檔。
+    validations:
+      required: true

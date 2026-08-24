@@ -1,0 +1,38 @@
+name: 飲食紀錄
+description: 新增一餐熱量到 GitHub DB
+title: "飲食："
+labels: ["food", "ingest"]
+body:
+  - type: dropdown
+    id: meal
+    attributes:
+      label: 餐
+      options: [早餐, 午餐, 晚餐, 小食]
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: 日期
+      placeholder: "2026-08-24"
+  - type: textarea
+    id: items
+    attributes:
+      label: 食物
+      placeholder: 雞胸、白飯、西蘭花
+    validations:
+      required: true
+  - type: input
+    id: kcal
+    attributes:
+      label: 熱量kcal
+      placeholder: "650"
+  - type: input
+    id: protein
+    attributes:
+      label: 蛋白質g
+      placeholder: "45"
+  - type: textarea
+    id: notes
+    attributes:
+      label: 備註

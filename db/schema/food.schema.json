@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://irrcookie.github.io/bodyfitnees/db/schema/food.schema.json",
+  "title": "飲食熱量紀錄",
+  "description": "每餐食物同巨量營養素。Git 內 JSON 即資料庫。",
+  "type": "object",
+  "required": ["version", "records"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/foodRecord" }
+    }
+  },
+  "$defs": {
+    "meal": {
+      "type": "string",
+      "enum": ["breakfast", "lunch", "dinner", "snack"]
+    },
+    "foodItem": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "amount": { "type": ["number", "null"] },
+        "unit": { "type": "string" },
+        "kcal": { "type": ["number", "null"] },
+        "proteinG": { "type": ["number", "null"] },
+        "carbG": { "type": ["number", "null"] },
+        "fatG": { "type": ["number", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "foodRecord": {
+      "type": "object",
+      "required": ["id", "eatenAt", "meal", "source"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "eatenAt": { "type": "string" },
+        "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "meal": { "$ref": "#/$defs/meal" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/foodItem" }
+        },
+        "totalKcal": { "type": ["number", "null"] },
+        "totalProteinG": { "type": ["number", "null"] },
+        "totalCarbG": { "type": ["number", "null"] },
+        "totalFatG": { "type": ["number", "null"] },
+        "photoNote": { "type": "string" },
+        "source": { "type": "string", "enum": ["chat", "ocr", "manual", "issue", "app"] },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,38 @@
+name: 訓練紀錄
+description: 新增一堂訓練到 GitHub DB
+title: "訓練："
+labels: ["fitness", "ingest"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 類型
+      options: [力量, 有氧, 活動度, 運動, 其他]
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: 日期
+  - type: input
+    id: title
+    attributes:
+      label: 標題
+      placeholder: 上肢推力
+  - type: input
+    id: minutes
+    attributes:
+      label: 分鐘
+  - type: input
+    id: kcal
+    attributes:
+      label: 消耗kcal
+  - type: textarea
+    id: moves
+    attributes:
+      label: 動作
+      placeholder: 臥推 4x8 60kg
+  - type: textarea
+    id: notes
+    attributes:
+      label: 備註

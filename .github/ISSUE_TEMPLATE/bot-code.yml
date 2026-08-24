@@ -1,0 +1,12 @@
+name: Bot 寫 code
+description: 叫 code bot 改功能
+title: "bot-code："
+labels: ["bot-code"]
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: 要做咩
+      description: 用粵語寫清楚。Bot 會跟 AGENTS.md 同 iPhone PWA 約束。
+    validations:
+      required: true
