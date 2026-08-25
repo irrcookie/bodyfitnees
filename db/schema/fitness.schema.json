@@ -24,6 +24,13 @@
         "reps": { "type": ["integer", "string", "null"] },
         "weightKg": { "type": ["number", "null"] },
         "durationMin": { "type": ["number", "null"] },
+        "muscleGroups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["chest", "shoulders", "biceps", "triceps", "forearms", "back", "core", "quads", "glutes", "hamstrings", "calves"]
+          }
+        },
         "notes": { "type": "string" }
       },
       "additionalProperties": false
@@ -45,7 +52,10 @@
         },
         "muscleGroups": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string",
+            "enum": ["chest", "shoulders", "biceps", "triceps", "forearms", "back", "core", "quads", "glutes", "hamstrings", "calves"]
+          }
         },
         "rpe": { "type": ["number", "null"], "minimum": 1, "maximum": 10 },
         "source": { "type": "string", "enum": ["chat", "ocr", "manual", "issue", "app"] },

@@ -33,7 +33,10 @@ test("高脂膽固醇餐黃色", () => {
 });
 
 test("種子餐對應三色", () => {
-  const food = readJson("db/food.json");
-  const tones = food.records.map((r) => mealHealth(r, nutrition).tone);
+  const tones = [
+    mealHealth({ meal: "breakfast", totalKcal: 380, totalProteinG: 74, totalFatG: 4, totalCholesterolMg: 72 }, nutrition).tone,
+    mealHealth({ meal: "lunch", totalKcal: 550, totalProteinG: 37, totalFatG: 12, totalCholesterolMg: 70 }, nutrition).tone,
+    mealHealth({ meal: "dinner", totalKcal: 980, totalProteinG: 44, totalFatG: 46, totalCholesterolMg: 180 }, nutrition).tone,
+  ];
   assert.deepEqual(tones.sort(), ["good", "ok", "warn"].sort());
 });

@@ -13,6 +13,11 @@ test("DB 同 PWA 契約", () => {
   assert.equal(validateAll(), true);
 });
 
+test("冇 dummy 餐", () => {
+  const food = readJson("db/food.json");
+  assert.equal(food.records.some((r) => String(r.id).includes("demo")), false);
+});
+
 test("小米種子數據", () => {
   const body = readJson("db/body.json");
   const row = body.records[0];
@@ -46,6 +51,8 @@ test("iPhone Web App meta", () => {
   assert.match(js, /脂肪攝取量/);
   assert.match(js, /膽固醇攝取量/);
   assert.equal(js.includes("快速輸入"), false);
+  assert.equal(js.includes("存訓練"), false);
+  assert.match(js, /肌群力量/);
   assert.match(fs.readFileSync("assets/js/meal-tone.js", "utf8"), /meal-card-good/);
   assert.match(fs.readFileSync("assets/css/app.css", "utf8"), /meal-card-warn/);
 });

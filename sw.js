@@ -1,4 +1,4 @@
-const CACHE = "bodyfit-v3";
+const CACHE = "bodyfit-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -8,6 +8,8 @@ const ASSETS = [
   "./assets/js/store.js",
   "./assets/js/charts.js",
   "./assets/js/meal-tone.js",
+  "./assets/js/muscles.js",
+  "./assets/js/body-map.js",
   "./assets/icons/icon-192.png",
   "./assets/icons/icon-512.png",
   "./assets/icons/apple-touch-icon.png",
