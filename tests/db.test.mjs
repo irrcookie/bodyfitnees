@@ -49,8 +49,9 @@ test("iPhone Web App meta", () => {
   assert.equal(html.includes("教練"), false);
   assert.equal(html.includes("總覽"), false);
   const js = fs.readFileSync("assets/js/app.js", "utf8");
+  const kcalJs = fs.readFileSync("assets/js/kcal-burn.js", "utf8");
   assert.equal(js.includes("加入主畫面"), false);
-  assert.match(js, /卡路里攝取量/);
+  assert.match(kcalJs, /卡路里攝取量/);
   assert.match(js, /蛋白質攝取量/);
   assert.match(js, /脂肪攝取量/);
   assert.match(js, /膽固醇攝取量/);

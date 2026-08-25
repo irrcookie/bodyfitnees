@@ -119,7 +119,7 @@ Timestamp 用對話時間轉 HKT。餐段：
 }
 ```
 
-同一日多個動作：合成 **一條** record（除非用家分開兩堂）。`title` 跟當日 split（一推力／二下肢／四拉力…）。
+同一日多個動作：合成 **一條** record（除非用家分開兩堂）。`title` 跟當日 split（一推力／二下肢／四拉力…）。有 `kcalBurned` 或 `durationMin` 時，飲食頁卡路里卡會用紫色顯示訓練扣減。
 
 ## 身體 `db/body.json`
 

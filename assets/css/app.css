@@ -238,6 +238,48 @@ html.is-standalone {
   border-color: rgba(255, 138, 61, 0.45);
 }
 
+.kcal-card.has-burn .value {
+  color: #ddd6fe;
+  text-shadow: 0 0 18px rgba(167, 139, 250, 0.45);
+}
+
+.kcal-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 4px 0 2px;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.kcal-eaten-label {
+  color: #7ec8ff;
+}
+
+.kcal-burn-label {
+  color: #c4b5fd;
+}
+
+.kcal-legend {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.kcal-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.kcal-bar {
+  position: relative;
+}
+
 .meal-card-good {
   background: linear-gradient(180deg, rgba(61, 255, 176, 0.22), rgba(61, 255, 176, 0.06) 48%, var(--card));
   border-color: rgba(61, 255, 176, 0.42);
