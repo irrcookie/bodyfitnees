@@ -21,6 +21,8 @@
 
 ## 用家點同你溝通
 
+入庫步驟、JSON 模板、餐段同估算表：**先讀 [`UPLOAD.md`](UPLOAD.md)**，唔使再翻 schema。
+
 Kp 會喺 **Cursor 對話**傳：
 
 - 小米人體成分報告截圖 → OCR 之後寫入 `db/body.json`
