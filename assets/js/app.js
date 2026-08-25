@@ -20,9 +20,9 @@ import {
 import { sparkline, ring, composition } from "./charts.js";
 
 const $ = (id) => document.getElementById(id);
-const routes = ["home", "body", "food", "train", "coach"];
+const routes = ["food", "body", "train", "coach", "home"];
 let db = null;
-let route = "home";
+let route = "food";
 
 function standalone() {
   return window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
@@ -83,17 +83,14 @@ function renderHome() {
   const { days, done } = goalProgress(p, b);
   const kcal = sum(todayFood(), "totalKcal");
   const protein = sum(todayFood(), "totalProteinG");
+  const fat = sum(todayFood(), "totalFatG");
+  const chol = sum(todayFood(), "totalCholesterolMg");
   const trained = todayTrain().length > 0;
   const slot = currentMealSlot();
   const needMeal = !mealLogged(slot);
   const plan = p.training.split.find((s) => s.weekday === weekdayHK()) || p.training.split[0];
 
   return `
-    ${
-      standalone()
-        ? ""
-        : `<div class="install-banner">用 Safari 打開 → 分享 → <b>加入主畫面</b>，就會變成 iPhone App。通知請同時加入日曆提醒。</div>`
-    }
     <article class="hero">
       <div class="label">而家體重 · ${b ? b.measuredAt.slice(0, 16).replace("T", " ") : "未有數據"}</div>
       <div class="value">${fmt(b?.weightKg, 1)}<small>kg</small></div>
@@ -103,14 +100,16 @@ function renderHome() {
     <div class="grid-2">
       <div class="metric"><div class="k">身體得分</div><div class="v">${b?.bodyScore ?? "—"}</div>${badge("肌肉型計劃")}</div>
       <div class="metric"><div class="k">目標進度</div><div class="v">${fmt(done, 0)}%</div><div class="fine">體脂由 22.7% 去 ${p.goal.targetBodyFatPercent}%</div></div>
-      <div class="metric"><div class="k">今日熱量</div><div class="v">${fmt(kcal, 0)}</div><div class="fine">目標 ${p.nutrition.kcalTarget} kcal</div></div>
-      <div class="metric"><div class="k">今日蛋白</div><div class="v">${fmt(protein, 0)}</div><div class="fine">目標 ${p.nutrition.proteinG} g</div></div>
+      <div class="metric"><div class="k">今日卡路里</div><div class="v">${fmt(kcal, 0)}</div><div class="fine">參考 ${p.nutrition.kcalTarget} kcal</div></div>
+      <div class="metric"><div class="k">今日蛋白</div><div class="v">${fmt(protein, 0)}</div><div class="fine">參考 ${p.nutrition.proteinG} g</div></div>
+      <div class="metric"><div class="k">今日脂肪</div><div class="v">${fmt(fat, 0)}</div><div class="fine">參考 ${p.nutrition.fatG} g</div></div>
+      <div class="metric"><div class="k">今日膽固醇</div><div class="v">${fmt(chol, 0)}</div><div class="fine">參考 ${p.nutrition.cholesterolMg} mg</div></div>
     </div>
     <article class="card ${needMeal ? "warn-pulse" : ""}">
       <div class="section-title" style="margin-top:0">飲食打卡<span>${hkTime()}</span></div>
       <div class="progress-row"><span>${mealLabel(slot)}</span><span>${needMeal ? "未入" : "已入"}</span></div>
       <div class="bar"><i style="width:${Math.min(100, (kcal / p.nutrition.kcalTarget) * 100)}%;background:var(--tech)"></i></div>
-      <p class="fine">${needMeal ? `而家係 ${mealLabel(slot)} 時段，記低食咗咩。` : "呢個時段已經有紀錄。"} 09:30／13:30／20:00 會有 bot 提醒。</p>
+      <p class="fine">${needMeal ? `而家係 ${mealLabel(slot)} 時段，記低食咗咩。` : "呢個時段已經有紀錄。"}</p>
     </article>
     <article class="card">
       <div class="section-title" style="margin-top:0">今日訓練<span>${trained ? "已練" : "未練"}</span></div>
@@ -119,7 +118,7 @@ function renderHome() {
     </article>
     <article class="card coach-card">
       <div class="section-title" style="margin-top:0">今日建議</div>
-      <p>${coachToday(b, { kcal, protein, trained, days })}</p>
+      <p>${coachToday(b, { kcal, protein, fat, chol, trained, days })}</p>
     </article>
     <div class="section-title">體重趨勢<span>目標 ${p.goal.targetWeightKg}kg</span></div>
     <article class="card">${sparkline(db.body.records.map((r) => r.weightKg).reverse(), p.goal.targetWeightKg)}</article>
@@ -129,12 +128,31 @@ function renderHome() {
 function coachToday(b, ctx) {
   const bits = [];
   bits.push(`離 11 月仲有 ${ctx.days} 日。`);
-  if (b?.bodyFatPercent > 18) bits.push(`體脂 ${b.bodyFatPercent}% 仍然偏高，今日飲食以高蛋白、少油為主。`);
+  if (b?.bodyFatPercent > 18) bits.push(`體脂 ${b.bodyFatPercent}% 仍然偏高，控制脂肪同膽固醇。`);
   if (ctx.protein < db.profile.nutrition.proteinG * 0.5) bits.push(`蛋白先得 ${fmt(ctx.protein, 0)}g，盡量食到 ${db.profile.nutrition.proteinG}g。`);
+  if (ctx.kcal != null && ctx.kcal > db.profile.nutrition.kcalTarget) bits.push(`卡路里已超過參考 ${db.profile.nutrition.kcalTarget} kcal。`);
+  if (ctx.fat != null && ctx.fat > db.profile.nutrition.fatG) bits.push(`脂肪已超過參考 ${db.profile.nutrition.fatG}g。`);
+  if (ctx.chol != null && ctx.chol > db.profile.nutrition.cholesterolMg) bits.push(`膽固醇已超過參考 ${db.profile.nutrition.cholesterolMg}mg。`);
   if (!ctx.trained) bits.push("未訓練：做齊力量為主，有氧用步行就得，唔好掉肌肉。");
-  if (b?.visceralFatLevel >= 10) bits.push("內臟脂肪稍多，晚餐早啲完，少糖汽水。");
+  if (b?.visceralFatLevel >= 10) bits.push("內臟脂肪稍多，晚餐早啲、少油炸。");
   if (b?.boneSaltRatePercent < 4.2) bits.push("骨鹽率不足，注意鈣同力量訓練。");
   return bits.join(" ");
+}
+
+function intakeCard(title, current, target, unit, color) {
+  const pct = target ? Math.min(100, (current / target) * 100) : 0;
+  const over = target ? current > target : false;
+  return `<article class="card intake-card ${over ? "over" : ""}">
+    <div class="section-title" style="margin-top:0">${title}<span>參考 ${fmt(target, 0)} ${unit}${over ? " · 超標" : ""}</span></div>
+    <div class="stat-row">
+      ${ring(pct, unit, color)}
+      <div>
+        <div class="value">${fmt(current, 0)}<small> ${unit}</small></div>
+        <div class="fine">已攝取 / 每日參考</div>
+      </div>
+    </div>
+    <div class="bar" style="margin-top:10px"><i style="width:${pct}%;background:${over ? "var(--orange)" : color}"></i></div>
+  </article>`;
 }
 
 function metricCard(label, value, unit, extra, status) {
@@ -219,22 +237,20 @@ function renderFood() {
   const today = todayFood();
   const kcal = sum(today, "totalKcal");
   const protein = sum(today, "totalProteinG");
+  const fat = sum(today, "totalFatG");
+  const chol = sum(today, "totalCholesterolMg");
   const byMeal = ["breakfast", "lunch", "dinner", "snack"].map((id) => ({
     id,
     rec: today.find((r) => r.meal === id),
   }));
   const history = db.food.records.slice(0, 12);
   return `
-    <article class="hero">
-      <div class="label">今日熱量</div>
-      <div class="stat-row">
-        ${ring((kcal / p.kcalTarget) * 100, "已食", `${fmt(kcal, 0)} / ${p.kcalTarget}`)}
-        <div>
-          <div class="value" style="font-size:36px">${fmt(kcal, 0)}<small>kcal</small></div>
-          <div class="fine">蛋白 ${fmt(protein, 0)} / ${p.proteinG}g</div>
-        </div>
-      </div>
-    </article>
+    ${intakeCard("卡路里攝取量", kcal, p.kcalTarget, "kcal", "#3d9eff")}
+    ${intakeCard("蛋白質攝取量", protein, p.proteinG, "g", "#3dffb0")}
+    <div class="grid-2">
+      ${intakeCard("脂肪攝取量", fat, p.fatG, "g", "#ff8a3d")}
+      ${intakeCard("膽固醇攝取量", chol, p.cholesterolMg, "mg", "#ff5d73")}
+    </div>
     ${byMeal
       .map(({ id, rec }) => {
         const meal = p.meals.find((m) => m.id === id);
@@ -243,8 +259,8 @@ function renderFood() {
           ${
             rec
               ? `<div>${rec.items?.map((i) => i.name).join("、") || rec.notes || ""}</div>
-                 <div class="fine">${fmt(rec.totalKcal, 0)} kcal · 蛋白 ${fmt(rec.totalProteinG, 0)}g</div>`
-              : `<div class="fine">未有紀錄。用下面快速輸入，或者傳相到 Cursor。</div>`
+                 <div class="fine">${fmt(rec.totalKcal, 0)} kcal · 蛋白 ${fmt(rec.totalProteinG, 0)}g · 脂肪 ${fmt(rec.totalFatG, 0)}g · 膽固醇 ${fmt(rec.totalCholesterolMg, 0)}mg</div>`
+              : `<div class="fine">未有紀錄。用下面快速輸入。</div>`
           }
         </article>`;
       })
@@ -258,8 +274,10 @@ function renderFood() {
       </div>
       <input id="foodItems" aria-label="食物" placeholder="例如：雞胸 200g、白飯、西蘭花" />
       <div class="grid-2">
-        <input id="foodKcal" aria-label="熱量 kcal" inputmode="decimal" placeholder="熱量 kcal" />
-        <input id="foodProtein" aria-label="蛋白 g" inputmode="decimal" placeholder="蛋白 g" />
+        <input id="foodKcal" aria-label="卡路里 kcal" inputmode="decimal" placeholder="卡路里 kcal" />
+        <input id="foodProtein" aria-label="蛋白質 g" inputmode="decimal" placeholder="蛋白質 g" />
+        <input id="foodFat" aria-label="脂肪 g" inputmode="decimal" placeholder="脂肪 g" />
+        <input id="foodChol" aria-label="膽固醇 mg" inputmode="decimal" placeholder="膽固醇 mg" />
       </div>
       <button class="btn" id="saveFood" type="button">存呢餐</button>
     </article>
@@ -270,7 +288,7 @@ function renderFood() {
           ? history
               .map(
                 (r) =>
-                  `<div class="list-item"><div><strong>${mealLabel(r.meal)}</strong><div class="fine">${r.date} · ${(r.items || []).map((i) => i.name).join("、") || r.notes || ""}</div></div><strong>${fmt(r.totalKcal, 0)}</strong></div>`,
+                  `<div class="list-item"><div><strong>${mealLabel(r.meal)}</strong><div class="fine">${r.date} · ${(r.items || []).map((i) => i.name).join("、") || r.notes || ""} · 蛋白 ${fmt(r.totalProteinG, 0)}g · 脂 ${fmt(r.totalFatG, 0)}g · 膽固醇 ${fmt(r.totalCholesterolMg, 0)}mg</div></div><strong>${fmt(r.totalKcal, 0)}</strong></div>`,
               )
               .join("")
           : `<div class="empty">未有飲食紀錄</div>`
@@ -341,20 +359,15 @@ function renderTrain() {
 function renderCoach() {
   const msgs = db.coach.messages;
   return `
-    <article class="card coach-card">
-      <div class="section-title" style="margin-top:0">點樣同 bot 溝通</div>
-      <p>喺呢個 Cursor 對話傳：小米截圖、飯餐相、訓練內容。我會 OCR／整理之後 commit 去 GitHub DB，個 dashboard 會自動更新。</p>
-    </article>
     ${msgs
       .map(
         (m) =>
           `<article class="msg ${m.role === "user" ? "me" : ""}"><div class="when">${(m.createdAt || "").replace("T", " ").slice(0, 16)} · ${m.role === "coach" ? "教練" : "你"}</div><strong>${m.title || ""}</strong><p style="white-space:pre-wrap;margin:6px 0 0">${m.body}</p></article>`,
       )
-      .join("")}
+      .join("") || `<div class="empty">未有教練訊息</div>`}
     <article class="card">
       <textarea id="coachNote" aria-label="教練留言" placeholder="例如：而家想加強背部，或者今晚食咗燒味..."></textarea>
       <button class="btn" id="saveCoach" type="button">傳俾教練紀錄</button>
-      <button class="btn ghost row" id="openIssue" type="button">用 GitHub Issue 打卡</button>
     </article>
   `;
 }
@@ -388,7 +401,9 @@ function bindPage() {
     const text = $("foodItems").value.trim();
     const kcal = Number($("foodKcal").value);
     const proteinG = Number($("foodProtein").value);
-    if (!text && !kcal) return toast("寫低食咗咩或者熱量");
+    const fatG = Number($("foodFat").value);
+    const chol = Number($("foodChol").value);
+    if (!text && !kcal) return toast("寫低食咗咩或者卡路里");
     const rec = {
       id: uid("food"),
       date: hkDate(),
@@ -398,7 +413,8 @@ function bindPage() {
       totalKcal: Number.isFinite(kcal) && kcal > 0 ? kcal : null,
       totalProteinG: Number.isFinite(proteinG) && proteinG > 0 ? proteinG : null,
       totalCarbG: null,
-      totalFatG: null,
+      totalFatG: Number.isFinite(fatG) && fatG > 0 ? fatG : null,
+      totalCholesterolMg: Number.isFinite(chol) && chol > 0 ? chol : null,
       notes: text,
       source: "app",
     };
@@ -468,12 +484,8 @@ function bindPage() {
     queueRecord("coach", rec);
     db.coach.messages = [rec, ...db.coach.messages];
     $("coachNote").value = "";
-    toast("已記低。下一次 Cursor 對話我會睇到本地暫存，或者你直接喺對話講。");
+    toast("已記低。");
     render();
-  });
-  $("openIssue")?.addEventListener("click", () => {
-    const g = db.profile.github;
-    location.href = `https://github.com/${g.owner}/${g.repo}/issues/new/choose`;
   });
 }
 
@@ -501,16 +513,13 @@ function toast(text) {
 
 function openSettings() {
   const token = getToken();
-  $("sheetTitle").textContent = "設定同 iPhone App";
+  $("sheetTitle").textContent = "設定";
   $("sheetBody").innerHTML = `
-    <p class="fine">加到主畫面之後，會隱藏 Safari 工具列，配合 Dynamic Island 同底部橫條。</p>
-    <p>1. Safari 打開呢個站<br>2. 分享 → 加入主畫面<br>3. 開「身體管理」</p>
-    <a class="btn" href="./reminders.ics">加入 Apple 日曆提醒（09:30／13:30／20:00）</a>
+    <a class="btn" href="./reminders.ics">加入飲食打卡日曆（09:30／13:30／20:00）</a>
     <button class="btn ghost row" id="notifyBtn" type="button">允許瀏覽器通知</button>
-    <label class="fine">GitHub token（可選，用嚟由手機直接寫入 DB）</label>
+    <label class="fine">GitHub token（可選）</label>
     <input id="tokenInput" type="password" value="${token}" placeholder="ghp_..." autocomplete="off" aria-label="GitHub token" />
     <button class="btn" id="saveToken" type="button">儲存 token</button>
-    <p class="fine">唔填 token 都得：飲食／訓練會暫存在手機，截圖同正式入庫用 Cursor 對話。</p>
   `;
   $("sheet").hidden = false;
   $("saveToken").onclick = () => {
@@ -521,7 +530,7 @@ function openSettings() {
   $("notifyBtn").onclick = async () => {
     if (!("Notification" in window)) return toast("呢個 Safari 版本未支援通知");
     const perm = await Notification.requestPermission();
-    toast(perm === "granted" ? "已允許。iPhone 要加咗主畫面先穩定。" : "未允許通知");
+    toast(perm === "granted" ? "已允許通知" : "未允許通知");
   };
 }
 
@@ -541,8 +550,8 @@ function maybeRemind() {
 }
 
 function setRoute() {
-  const hash = (location.hash || "#home").replace("#", "").replace("/", "") || "home";
-  route = routes.includes(hash) ? hash : "home";
+  const hash = (location.hash || "#food").replace("#", "").replace("/", "") || "food";
+  route = routes.includes(hash) ? hash : "food";
 }
 
 async function init() {

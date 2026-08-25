@@ -60,10 +60,11 @@ export function ingest(issue) {
         .map((n) => n.trim())
         .filter(Boolean)
         .map((name) => ({ name })),
-      totalKcal: form["熱量kcal"] ? Number(form["熱量kcal"]) : null,
+      totalKcal: form["卡路里kcal"] ? Number(form["卡路里kcal"]) : form["熱量kcal"] ? Number(form["熱量kcal"]) : null,
       totalProteinG: form["蛋白質g"] ? Number(form["蛋白質g"]) : null,
       totalCarbG: null,
-      totalFatG: null,
+      totalFatG: form["脂肪g"] ? Number(form["脂肪g"]) : null,
+      totalCholesterolMg: form["膽固醇mg"] ? Number(form["膽固醇mg"]) : null,
       source: "issue",
       notes: form["備註"] || "",
     };

@@ -36,19 +36,19 @@ export function sparkline(values, target, w = 320, h = 140) {
   );
 }
 
-export function ring(percent, label, sub) {
+export function ring(percent, label, color = "#3d9eff") {
   const p = Math.max(0, Math.min(100, percent || 0));
   const r = 36;
   const c = 2 * Math.PI * r;
   const dash = c * (1 - p / 100);
   return `<svg class="ring-wrap" viewBox="0 0 92 92">
     <circle cx="46" cy="46" r="${r}" fill="none" stroke="#1a1a24" stroke-width="8"/>
-    <circle cx="46" cy="46" r="${r}" fill="none" stroke="#3d9eff" stroke-width="8"
+    <circle cx="46" cy="46" r="${r}" fill="none" stroke="${color}" stroke-width="8"
       stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${dash.toFixed(1)}"
       transform="rotate(-90 46 46)"/>
-    <text x="46" y="44" text-anchor="middle" fill="#7ec8ff" font-size="16" font-weight="700">${Math.round(p)}%</text>
-    <text x="46" y="60" text-anchor="middle" fill="#8b90a3" font-size="9">${label}</text>
-  </svg><div><div class="fine">${sub || ""}</div></div>`;
+    <text x="46" y="48" text-anchor="middle" fill="${color}" font-size="16" font-weight="700">${Math.round(p)}%</text>
+    <text x="46" y="64" text-anchor="middle" fill="#8b90a3" font-size="9">${label}</text>
+  </svg>`;
 }
 
 export function composition(parts) {

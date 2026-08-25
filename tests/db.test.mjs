@@ -22,12 +22,14 @@ test("小米種子數據", () => {
   assert.equal(row.bodyType, "肥胖");
 });
 
-test("個人目標", () => {
+test("營養參考分開", () => {
   const p = readJson("db/profile.json");
   assert.equal(p.heightCm, 170);
   assert.equal(p.goal.deadline, "2026-11-01");
-  assert.equal(p.goal.targetWeightKg, 72);
-  assert.equal(p.goal.targetBodyFatPercent, 15);
+  assert.equal(p.nutrition.kcalTarget, 2200);
+  assert.equal(p.nutrition.proteinG, 160);
+  assert.equal(p.nutrition.fatG, 70);
+  assert.equal(p.nutrition.cholesterolMg, 300);
 });
 
 test("iPhone Web App meta", () => {
@@ -36,4 +38,11 @@ test("iPhone Web App meta", () => {
   assert.match(html, /apple-mobile-web-app-capable/);
   assert.match(html, /black-translucent/);
   assert.match(html, /lang="zh-HK"/);
+  assert.ok(html.indexOf("飲食") < html.indexOf("總覽"), "飲食要放開頭");
+  const js = fs.readFileSync("assets/js/app.js", "utf8");
+  assert.equal(js.includes("加入主畫面"), false);
+  assert.match(js, /卡路里攝取量/);
+  assert.match(js, /蛋白質攝取量/);
+  assert.match(js, /脂肪攝取量/);
+  assert.match(js, /膽固醇攝取量/);
 });

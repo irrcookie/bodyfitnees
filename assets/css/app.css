@@ -179,11 +179,11 @@ html.is-standalone {
   mask: var(--mask) center / contain no-repeat;
 }
 
-.tab[data-route="home"] i { --mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 3 3 10h2v10h6v-6h2v6h6V10h2z'/></svg>"); }
-.tab[data-route="body"] i { --mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm-2 8h4l3 12h-2l-1-4h-4l-1 4H7z'/></svg>"); }
 .tab[data-route="food"] i { --mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M7 2v9a3 3 0 1 0 6 0V2h2v20h-2v-8H9v8H7V2zm10 4h2v16h-2z'/></svg>"); }
+.tab[data-route="body"] i { --mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm-2 8h4l3 12h-2l-1-4h-4l-1 4H7z'/></svg>"); }
 .tab[data-route="train"] i { --mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M2 9h3v6H2zm17 0h3v6h-3zM6 10h2v4H6zm10 0h2v4h-2zM9 8h6v8H9z'/></svg>"); }
 .tab[data-route="coach"] i { --mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M4 4h16v12H7l-3 3z'/></svg>"); }
+.tab[data-route="home"] i { --mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 3 3 10h2v10h6v-6h2v6h6V10h2z'/></svg>"); }
 
 .tab.is-active {
   color: var(--tech);
@@ -220,6 +220,23 @@ html.is-standalone {
   margin-left: 4px;
   color: var(--muted);
   font-weight: 600;
+}
+
+.intake-card .value {
+  font-size: 34px;
+  font-family: var(--num);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--tech-2);
+  text-shadow: 0 0 18px var(--glow);
+}
+
+.intake-card.over {
+  border-color: rgba(255, 138, 61, 0.45);
+}
+
+.intake-card.over .value {
+  color: var(--orange);
 }
 
 .badge {
@@ -475,15 +492,6 @@ textarea { min-height: 96px; resize: vertical; }
 .body-type b.goal {
   outline: 1px dashed var(--tech);
   color: var(--tech-2);
-}
-
-.install-banner {
-  margin: 0 0 12px;
-  padding: 12px;
-  border-radius: 16px;
-  background: var(--tech-dim);
-  border: 1px solid var(--line);
-  font-size: 13px;
 }
 
 .sheet[hidden] { display: none; }
