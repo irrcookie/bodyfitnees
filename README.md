@@ -22,7 +22,9 @@ Kp 嘅身體／飲食／訓練儀表板。資料全部放喺 Git 入面嘅 JSON�
 2. **飯餐相或文字**（「午餐雞胸 200g 650kcal」）→ `db/food.json`
 3. **訓練內容** → `db/fitness.json`
 
-寫完會 commit 去 GitHub，dashboard 自動更新。
+寫完會 commit 去 GitHub，dashboard 自動更新。飲食頁冇輸入表格，餐記錄用 Cursor 對話入。
+
+主畫面 App 右上角有 **重新整理**，可以清 cache 拉最新版。
 
 亦可以喺 GitHub 開 Issue 表單（飲食／訓練），`ingest` bot 會入庫。
 

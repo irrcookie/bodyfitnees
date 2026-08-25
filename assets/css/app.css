@@ -119,12 +119,17 @@ html.is-standalone {
   padding: 0;
 }
 
-.icon-btn span {
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn.refresh-btn {
+  color: var(--tech-2);
+}
+
+.icon-btn.refresh-btn svg {
   display: block;
-  width: 16px;
-  height: 1.5px;
-  background: var(--tech-2);
-  border-radius: 2px;
 }
 
 .goal-strip {
@@ -235,8 +240,40 @@ html.is-standalone {
   border-color: rgba(255, 138, 61, 0.45);
 }
 
-.intake-card.over .value {
-  color: var(--orange);
+.meal-card-good {
+  background: linear-gradient(180deg, rgba(61, 255, 176, 0.22), rgba(61, 255, 176, 0.06) 48%, var(--card));
+  border-color: rgba(61, 255, 176, 0.42);
+  box-shadow: 0 0 0 1px rgba(61, 255, 176, 0.08), 0 12px 40px rgba(0, 0, 0, 0.28);
+}
+
+.meal-card-warn {
+  background: linear-gradient(180deg, rgba(245, 197, 66, 0.24), rgba(245, 197, 66, 0.07) 48%, var(--card));
+  border-color: rgba(245, 197, 66, 0.5);
+  box-shadow: 0 0 0 1px rgba(245, 197, 66, 0.1), 0 12px 40px rgba(0, 0, 0, 0.28);
+}
+
+.meal-tag {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.meal-tag-good {
+  color: var(--green);
+  background: rgba(61, 255, 176, 0.12);
+}
+
+.meal-tag-ok {
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.meal-tag-warn {
+  color: #f5c542;
+  background: rgba(245, 197, 66, 0.12);
 }
 
 .badge {
@@ -372,7 +409,8 @@ html.is-standalone {
 .list-item:last-child { border-bottom: 0; }
 
 .btn,
-button.btn {
+button.btn,
+a.btn {
   min-height: 48px;
   border: 0;
   border-radius: 14px;
@@ -382,6 +420,11 @@ button.btn {
   font-size: 15px;
   width: 100%;
   font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 .btn.ghost {
