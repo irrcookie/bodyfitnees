@@ -24,6 +24,10 @@ export function validateAll() {
   assert(profile.age === 28, "年齡應為 28");
   assert(profile.goal?.deadline === "2026-11-01", "目標限期應為 2026-11-01");
   assert(profile.goal?.targetWeightKg === 72, "目標體重應為 72kg");
+  assert(profile.nutrition?.kcalTarget === 2200, "卡路里參考應為 2200");
+  assert(profile.nutrition?.proteinG === 160, "蛋白質參考應為 160g");
+  assert(profile.nutrition?.fatG === 70, "脂肪參考應為 70g");
+  assert(profile.nutrition?.cholesterolMg === 300, "膽固醇參考應為 300mg");
   const times = (profile.nutrition?.meals || []).map((m) => m.remindAt);
   assert(times.includes("09:30") && times.includes("13:30") && times.includes("20:00"), "飲食提醒要 09:30 / 13:30 / 20:00");
 

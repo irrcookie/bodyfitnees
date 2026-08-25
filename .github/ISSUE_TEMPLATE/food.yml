@@ -25,13 +25,23 @@ body:
   - type: input
     id: kcal
     attributes:
-      label: 熱量kcal
+      label: 卡路里kcal
       placeholder: "650"
   - type: input
     id: protein
     attributes:
       label: 蛋白質g
       placeholder: "45"
+  - type: input
+    id: fat
+    attributes:
+      label: 脂肪g
+      placeholder: "18"
+  - type: input
+    id: chol
+    attributes:
+      label: 膽固醇mg
+      placeholder: "80"
   - type: textarea
     id: notes
     attributes:

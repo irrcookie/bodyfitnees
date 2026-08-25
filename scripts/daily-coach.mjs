@@ -36,6 +36,8 @@ export function buildCoachMessage() {
   );
   const kcal = food.records.filter((r) => r.date === today).reduce((n, r) => n + (r.totalKcal || 0), 0);
   const protein = food.records.filter((r) => r.date === today).reduce((n, r) => n + (r.totalProteinG || 0), 0);
+  const fat = food.records.filter((r) => r.date === today).reduce((n, r) => n + (r.totalFatG || 0), 0);
+  const chol = food.records.filter((r) => r.date === today).reduce((n, r) => n + (r.totalCholesterolMg || 0), 0);
   const trained = fitness.records.some((r) => r.date === today);
   const plan = profile.training.split.find((s) => s.weekday === weekday());
   const lines = [
@@ -43,10 +45,13 @@ export function buildCoachMessage() {
     latest
       ? `最新體重 ${latest.weightKg}kg、體脂 ${latest.bodyFatPercent}%、肌肉 ${latest.muscleMassKg}kg。目標：${profile.goal.targetWeightKg}kg / ${profile.goal.targetBodyFatPercent}% / ${profile.goal.targetMuscleMassKg}kg 肌肉。`
       : "未有身體數據。",
-    `今日已食 ${kcal} kcal（目標 ${profile.nutrition.kcalTarget}），蛋白 ${protein}g（目標 ${profile.nutrition.proteinG}g）。`,
+    `卡路里 ${kcal} / ${profile.nutrition.kcalTarget} kcal。蛋白質 ${protein} / ${profile.nutrition.proteinG}g。脂肪 ${fat} / ${profile.nutrition.fatG}g。膽固醇 ${chol} / ${profile.nutrition.cholesterolMg}mg。`,
     `今日訓練：${plan?.title || "—"}（${plan?.focus || ""}）${trained ? "，已打卡。" : "，未打卡。"}`,
   ];
-  if ((latest?.bodyFatPercent || 0) > 18) lines.push("體脂仍然偏高：控制油同糖，蛋白質優先。");
+  if ((latest?.bodyFatPercent || 0) > 18) lines.push("體脂仍然偏高：控制脂肪同膽固醇，蛋白質優先。");
+  if (kcal > profile.nutrition.kcalTarget) lines.push("卡路里已超過每日參考。");
+  if (fat > profile.nutrition.fatG) lines.push("脂肪已超過每日參考。");
+  if (chol > profile.nutrition.cholesterolMg) lines.push("膽固醇已超過每日參考。");
   if (!trained && plan?.title !== "休息") lines.push("未訓練就去練力量，有氧用步行，保住肌肉。");
   if (protein < profile.nutrition.proteinG * 0.6) lines.push("蛋白質未夠，補雞胸、蛋、乳清或豆腐。");
   if ((latest?.visceralFatLevel || 0) >= 10) lines.push("內臟脂肪稍多，晚餐早啲、少汽水。");

@@ -29,7 +29,8 @@
         "kcal": { "type": ["number", "null"] },
         "proteinG": { "type": ["number", "null"] },
         "carbG": { "type": ["number", "null"] },
-        "fatG": { "type": ["number", "null"] }
+        "fatG": { "type": ["number", "null"] },
+        "cholesterolMg": { "type": ["number", "null"] }
       },
       "additionalProperties": false
     },
@@ -49,6 +50,7 @@
         "totalProteinG": { "type": ["number", "null"] },
         "totalCarbG": { "type": ["number", "null"] },
         "totalFatG": { "type": ["number", "null"] },
+        "totalCholesterolMg": { "type": ["number", "null"] },
         "photoNote": { "type": "string" },
         "source": { "type": "string", "enum": ["chat", "ocr", "manual", "issue", "app"] },
         "notes": { "type": "string" }
