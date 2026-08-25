@@ -43,7 +43,11 @@ test("iPhone Web App meta", () => {
   assert.match(html, /apple-mobile-web-app-capable/);
   assert.match(html, /black-translucent/);
   assert.match(html, /lang="zh-HK"/);
-  assert.ok(html.indexOf("飲食") < html.indexOf("總覽"), "飲食要放開頭");
+  const nav = html.slice(html.indexOf("tabbar"));
+  assert.ok(nav.indexOf("飲食") < nav.indexOf("身體"), "飲食要放開頭");
+  assert.ok(nav.indexOf("身體") < nav.indexOf("訓練"), "身體喺訓練前面");
+  assert.equal(html.includes("教練"), false);
+  assert.equal(html.includes("總覽"), false);
   const js = fs.readFileSync("assets/js/app.js", "utf8");
   assert.equal(js.includes("加入主畫面"), false);
   assert.match(js, /卡路里攝取量/);
