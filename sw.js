@@ -1,4 +1,4 @@
-const CACHE = "bodyfit-v6";
+const CACHE = "bodyfit-v7";
 const ASSETS = [
   "./",
   "./index.html",
@@ -10,6 +10,7 @@ const ASSETS = [
   "./assets/js/meal-tone.js",
   "./assets/js/muscles.js",
   "./assets/js/body-map.js",
+  "./assets/js/kcal-burn.js",
   "./assets/js/vendor/male-front.js",
   "./assets/js/vendor/male-back.js",
   "./assets/icons/icon-192.png",

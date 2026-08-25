@@ -17,6 +17,7 @@ import { sparkline, ring, composition } from "./charts.js";
 import { mealHealth } from "./meal-tone.js";
 import { muscleStats } from "./muscles.js";
 import { renderBodyMap } from "./body-map.js";
+import { kcalIntakeCard, totalTrainKcal, sessionKcal } from "./kcal-burn.js";
 
 const $ = (id) => document.getElementById(id);
 const routes = ["food", "body", "train"];
@@ -178,13 +179,15 @@ function renderFood() {
   const protein = sum(today, "totalProteinG");
   const fat = sum(today, "totalFatG");
   const chol = sum(today, "totalCholesterolMg");
+  const weightKg = latest(db.body.records)?.weightKg || db.profile.goal.targetWeightKg || 72.7;
+  const burned = totalTrainKcal(todayTrain(), weightKg);
   const byMeal = ["breakfast", "lunch", "dinner", "snack"].map((id) => ({
     id,
     rec: today.find((r) => r.meal === id),
   }));
   const history = db.food.records.slice(0, 12);
   return `
-    ${intakeCard("卡路里攝取量", kcal, p.kcalTarget, "kcal", "#3d9eff")}
+    ${kcalIntakeCard({ eaten: kcal, burned, target: p.kcalTarget })}
     ${intakeCard("蛋白質攝取量", protein, p.proteinG, "g", "#3dffb0")}
     <div class="grid-2">
       ${intakeCard("脂肪攝取量", fat, p.fatG, "g", "#ff8a3d")}
@@ -232,6 +235,7 @@ function mealRecordCard(rec, nutrition) {
 function renderTrain() {
   const plan = db.profile.training.split.find((s) => s.weekday === weekdayHK());
   const today = todayTrain();
+  const weightKg = latest(db.body.records)?.weightKg || db.profile.goal.targetWeightKg || 72.7;
   const weekStart = (() => {
     const [y, m, d] = hkDate().split("-").map(Number);
     const dt = new Date(Date.UTC(y, m - 1, d));
@@ -258,7 +262,7 @@ function renderTrain() {
     ${
       today
         .map(
-          (r) => `<article class="card"><strong>${r.title}</strong><div class="fine">${r.durationMin || 0} 分鐘 · ${fmt(r.kcalBurned, 0)} kcal · RPE ${r.rpe ?? "—"}</div>
+          (r) => `<article class="card"><strong>${r.title}</strong><div class="fine">${r.durationMin || 0} 分鐘 · ${fmt(sessionKcal(r, weightKg), 0)} kcal · RPE ${r.rpe ?? "—"}</div>
           ${(r.exercises || []).map((e) => `<div class="list-item"><span>${e.name}</span><span>${e.sets || ""}×${e.reps || e.durationMin || ""} ${e.weightKg ? e.weightKg + "kg" : ""}</span></div>`).join("")}</article>`,
         )
         .join("") || `<article class="card"><div class="empty">今日未訓練。喺 Cursor 對話傳器械相，再寫 kg × 組 × 次數／時間，我會入庫。</div></article>`

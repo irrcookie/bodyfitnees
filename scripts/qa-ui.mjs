@@ -37,7 +37,7 @@ check("tech blue", css.includes("#3d9eff"), "tech blue");
 check("dark bg", css.includes("#0b0b0f"), "dark further 背景");
 check("routes", ["body", "food", "train"].every((r) => js.includes(`"${r}"`)), "三個畫面");
 check("no extra tabs", !html.includes("教練") && !html.includes("總覽"), "唔要教練同總覽頁");
-check("macros", js.includes("卡路里攝取量") && js.includes("蛋白質攝取量") && js.includes("脂肪攝取量") && js.includes("膽固醇攝取量"), "要分卡路里／蛋白／脂肪／膽固醇");
+check("macros", (js.includes("卡路里攝取量") || fs.readFileSync(path.join(root, "assets/js/kcal-burn.js"), "utf8").includes("卡路里攝取量")) && js.includes("蛋白質攝取量") && js.includes("脂肪攝取量") && js.includes("膽固醇攝取量"), "要分卡路里／蛋白／脂肪／膽固醇");
 check("no setup banner", !js.includes("加入主畫面"), "網頁唔使 setup 提示");
 check("no food form", !js.includes("快速輸入") && !js.includes("存呢餐"), "飲食用 Cursor 入，唔使網頁表格");
 check("no train form", !js.includes("記低呢堂") && !js.includes("存訓練"), "訓練用 Cursor 入，唔使網頁表格");
@@ -45,7 +45,8 @@ check("body map", js.includes("bodyMap") && js.includes("肌群力量"), "訓練
 check("meal colours", js.includes("mealHealth") && css.includes("meal-card-good") && css.includes("meal-card-warn"), "最近紀錄要有綠／黃背景");
 check("refresh", html.includes("refreshBtn") && js.includes("hardRefresh"), "主畫面要有重新整理");
 check("calendar", fs.existsSync(path.join(root, "reminders.ics")), "要有 Apple 日曆檔");
-check("sw", fs.existsSync(path.join(root, "sw.js")) && fs.readFileSync(path.join(root, "sw.js"), "utf8").includes("bodyfit-v6"), "要有新版 service worker");
+check("sw", fs.existsSync(path.join(root, "sw.js")) && fs.readFileSync(path.join(root, "sw.js"), "utf8").includes("bodyfit-v7"), "要有新版 service worker");
+check("train kcal on food", js.includes("kcalIntakeCard") && css.includes("kcal-burn-label") && fs.existsSync(path.join(root, "assets/js/kcal-burn.js")), "飲食卡路里要分色顯示訓練消耗");
 check("muscle map vectors", fs.existsSync(path.join(root, "assets/js/vendor/male-front.js")) && fs.existsSync(path.join(root, "assets/js/vendor/male-back.js")), "要有 MuscleMap 解剖向量");
 check("iphone width", /min\(440px/.test(css), "欄寬要貼 iPhone 16 Pro Max 440px");
 
