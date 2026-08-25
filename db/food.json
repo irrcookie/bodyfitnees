@@ -1,5 +1,62 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-25T11:17:00+08:00",
-  "records": []
+  "updatedAt": "2026-08-25T13:26:00+08:00",
+  "records": [
+    {
+      "id": "food-20260825-lunch-carbonara",
+      "eatenAt": "2026-08-25T13:26:00+08:00",
+      "date": "2026-08-25",
+      "meal": "lunch",
+      "items": [
+        {
+          "name": "螺旋意粉",
+          "amount": 320,
+          "unit": "g",
+          "kcal": 470,
+          "proteinG": 16,
+          "carbG": 94,
+          "fatG": 2.5,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "忌廉蛋黃醬",
+          "amount": 110,
+          "unit": "g",
+          "kcal": 310,
+          "proteinG": 7,
+          "carbG": 4,
+          "fatG": 30,
+          "cholesterolMg": 160
+        },
+        {
+          "name": "煙肉",
+          "amount": 50,
+          "unit": "g",
+          "kcal": 205,
+          "proteinG": 13,
+          "carbG": 1,
+          "fatG": 16.5,
+          "cholesterolMg": 45
+        },
+        {
+          "name": "芝士粉",
+          "amount": 20,
+          "unit": "g",
+          "kcal": 85,
+          "proteinG": 8,
+          "carbG": 1,
+          "fatG": 6,
+          "cholesterolMg": 18
+        }
+      ],
+      "totalKcal": 1070,
+      "totalProteinG": 44,
+      "totalCarbG": 100,
+      "totalFatG": 55,
+      "totalCholesterolMg": 223,
+      "photoNote": "餐廳一份螺旋意粉，厚忌廉黃醬、煙肉同大量芝士粉、黑胡椒，似忌廉碳拿拉。",
+      "source": "chat",
+      "notes": "由餐相估算餐廳一份分量；脂肪同膽固醇偏高。"
+    }
+  ]
 }
