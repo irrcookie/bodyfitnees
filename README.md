@@ -16,6 +16,8 @@ Kp 嘅身體／飲食／訓練儀表板。資料全部放喺 Git 入面嘅 JSON�
 
 ## 點樣同我溝通（Cursor 對話）
 
+Agent 入庫快徑：[`UPLOAD.md`](UPLOAD.md)。
+
 直接喺呢個 chat 傳：
 
 1. **小米體脂截圖** → 我 OCR 之後寫入 `db/body.json`
