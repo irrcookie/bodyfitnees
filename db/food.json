@@ -1,7 +1,73 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-25T13:26:00+08:00",
+  "updatedAt": "2026-08-25T21:39:00+08:00",
   "records": [
+    {
+      "id": "food-20260825-dinner-sushi",
+      "eatenAt": "2026-08-25T21:39:00+08:00",
+      "date": "2026-08-25",
+      "meal": "dinner",
+      "items": [
+        {
+          "name": "三文魚刺身",
+          "amount": 7,
+          "unit": "片",
+          "kcal": 270,
+          "proteinG": 26,
+          "carbG": 0,
+          "fatG": 18,
+          "cholesterolMg": 72
+        },
+        {
+          "name": "三文魚握壽司（生／炙燒）",
+          "amount": 5,
+          "unit": "件",
+          "kcal": 320,
+          "proteinG": 18,
+          "carbG": 42,
+          "fatG": 10,
+          "cholesterolMg": 50
+        },
+        {
+          "name": "辣三文魚軍艦",
+          "amount": 2,
+          "unit": "件",
+          "kcal": 170,
+          "proteinG": 11,
+          "carbG": 18,
+          "fatG": 8,
+          "cholesterolMg": 32
+        },
+        {
+          "name": "三文魚花壽司",
+          "amount": 1,
+          "unit": "件",
+          "kcal": 85,
+          "proteinG": 5,
+          "carbG": 8,
+          "fatG": 4,
+          "cholesterolMg": 22
+        },
+        {
+          "name": "飛魚籽軍艦",
+          "amount": 2,
+          "unit": "件",
+          "kcal": 120,
+          "proteinG": 7,
+          "carbG": 18,
+          "fatG": 2,
+          "cholesterolMg": 95
+        }
+      ],
+      "totalKcal": 965,
+      "totalProteinG": 67,
+      "totalCarbG": 86,
+      "totalFatG": 42,
+      "totalCholesterolMg": 271,
+      "photoNote": "外賣兩盒：約 7 片三文魚刺身，另 10 件壽司（辣三文魚軍艦、三文魚花、飛魚籽軍艦、炙燒同生三文魚握壽司）。",
+      "source": "chat",
+      "notes": "由餐相估算外送一份；三文魚脂肪同魚籽膽固醇偏高。"
+    },
     {
       "id": "food-20260825-lunch-carbonara",
       "eatenAt": "2026-08-25T13:26:00+08:00",
