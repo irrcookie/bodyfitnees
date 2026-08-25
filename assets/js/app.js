@@ -1,6 +1,5 @@
 import {
   loadDB,
-  queueRecord,
   getToken,
   setToken,
   latest,
@@ -11,10 +10,8 @@ import {
   currentMealSlot,
   mealLabel,
   statusTone,
-  uid,
   hkDate,
   hkTime,
-  nowIso,
 } from "./store.js";
 import { sparkline, ring, composition } from "./charts.js";
 import { mealHealth } from "./meal-tone.js";
@@ -22,7 +19,7 @@ import { muscleStats } from "./muscles.js";
 import { renderBodyMap } from "./body-map.js";
 
 const $ = (id) => document.getElementById(id);
-const routes = ["food", "body", "train", "coach", "home"];
+const routes = ["food", "body", "train"];
 let db = null;
 let route = "food";
 let bodyView = "front";
@@ -79,68 +76,6 @@ function todayTrain() {
 
 function mealLogged(slot) {
   return todayFood().some((r) => r.meal === slot);
-}
-
-function renderHome() {
-  const p = db.profile;
-  const b = latest(db.body.records);
-  const { days, done } = goalProgress(p, b);
-  const kcal = sum(todayFood(), "totalKcal");
-  const protein = sum(todayFood(), "totalProteinG");
-  const fat = sum(todayFood(), "totalFatG");
-  const chol = sum(todayFood(), "totalCholesterolMg");
-  const trained = todayTrain().length > 0;
-  const slot = currentMealSlot();
-  const needMeal = !mealLogged(slot);
-  const plan = p.training.split.find((s) => s.weekday === weekdayHK()) || p.training.split[0];
-
-  return `
-    <article class="hero">
-      <div class="label">而家體重 · ${b ? b.measuredAt.slice(0, 16).replace("T", " ") : "未有數據"}</div>
-      <div class="value">${fmt(b?.weightKg, 1)}<small>kg</small></div>
-      <div>${badge(b?.weightStatus)} ${b?.weightTrendNote || ""}</div>
-      <div class="fine" style="margin-top:8px">目標線 ${p.goal.targetWeightKg}kg　體脂目標 ${p.goal.targetBodyFatPercent}%　仲有 ${days} 日</div>
-    </article>
-    <div class="grid-2">
-      <div class="metric"><div class="k">身體得分</div><div class="v">${b?.bodyScore ?? "—"}</div>${badge("肌肉型計劃")}</div>
-      <div class="metric"><div class="k">目標進度</div><div class="v">${fmt(done, 0)}%</div><div class="fine">體脂由 22.7% 去 ${p.goal.targetBodyFatPercent}%</div></div>
-      <div class="metric"><div class="k">今日卡路里</div><div class="v">${fmt(kcal, 0)}</div><div class="fine">參考 ${p.nutrition.kcalTarget} kcal</div></div>
-      <div class="metric"><div class="k">今日蛋白</div><div class="v">${fmt(protein, 0)}</div><div class="fine">參考 ${p.nutrition.proteinG} g</div></div>
-      <div class="metric"><div class="k">今日脂肪</div><div class="v">${fmt(fat, 0)}</div><div class="fine">參考 ${p.nutrition.fatG} g</div></div>
-      <div class="metric"><div class="k">今日膽固醇</div><div class="v">${fmt(chol, 0)}</div><div class="fine">參考 ${p.nutrition.cholesterolMg} mg</div></div>
-    </div>
-    <article class="card ${needMeal ? "warn-pulse" : ""}">
-      <div class="section-title" style="margin-top:0">飲食打卡<span>${hkTime()}</span></div>
-      <div class="progress-row"><span>${mealLabel(slot)}</span><span>${needMeal ? "未入" : "已入"}</span></div>
-      <div class="bar"><i style="width:${Math.min(100, (kcal / p.nutrition.kcalTarget) * 100)}%;background:var(--tech)"></i></div>
-      <p class="fine">${needMeal ? `而家係 ${mealLabel(slot)} 時段，記低食咗咩。` : "呢個時段已經有紀錄。"}</p>
-    </article>
-    <article class="card">
-      <div class="section-title" style="margin-top:0">今日訓練<span>${trained ? "已練" : "未練"}</span></div>
-      <strong>${plan.title}</strong>
-      <p class="fine">${plan.focus}</p>
-    </article>
-    <article class="card coach-card">
-      <div class="section-title" style="margin-top:0">今日建議</div>
-      <p>${coachToday(b, { kcal, protein, fat, chol, trained, days })}</p>
-    </article>
-    <div class="section-title">體重趨勢<span>目標 ${p.goal.targetWeightKg}kg</span></div>
-    <article class="card">${sparkline(db.body.records.map((r) => r.weightKg).reverse(), p.goal.targetWeightKg)}</article>
-  `;
-}
-
-function coachToday(b, ctx) {
-  const bits = [];
-  bits.push(`離 11 月仲有 ${ctx.days} 日。`);
-  if (b?.bodyFatPercent > 18) bits.push(`體脂 ${b.bodyFatPercent}% 仍然偏高，控制脂肪同膽固醇。`);
-  if (ctx.protein < db.profile.nutrition.proteinG * 0.5) bits.push(`蛋白先得 ${fmt(ctx.protein, 0)}g，盡量食到 ${db.profile.nutrition.proteinG}g。`);
-  if (ctx.kcal != null && ctx.kcal > db.profile.nutrition.kcalTarget) bits.push(`卡路里已超過參考 ${db.profile.nutrition.kcalTarget} kcal。`);
-  if (ctx.fat != null && ctx.fat > db.profile.nutrition.fatG) bits.push(`脂肪已超過參考 ${db.profile.nutrition.fatG}g。`);
-  if (ctx.chol != null && ctx.chol > db.profile.nutrition.cholesterolMg) bits.push(`膽固醇已超過參考 ${db.profile.nutrition.cholesterolMg}mg。`);
-  if (!ctx.trained) bits.push("未訓練：做齊力量為主，有氧用步行就得，唔好掉肌肉。");
-  if (b?.visceralFatLevel >= 10) bits.push("內臟脂肪稍多，晚餐早啲、少油炸。");
-  if (b?.boneSaltRatePercent < 4.2) bits.push("骨鹽率不足，注意鈣同力量訓練。");
-  return bits.join(" ");
 }
 
 function intakeCard(title, current, target, unit, color) {
@@ -336,6 +271,7 @@ function renderTrain() {
       </div>
       <div class="body-map" id="bodyMap">${renderBodyMap(stats, { view: bodyView, selected: selectedMuscle })}</div>
       <div class="fine" style="text-align:center">撳一個部位睇力量趨勢</div>
+      <div class="fine" style="text-align:center;opacity:.7">解剖向量來自 MuscleMap（MIT）</div>
     </article>
     <article class="card" id="muscleTrend">
       <div class="section-title" style="margin-top:0">${part.label}力量<span>${part.sessions || 0} 堂</span></div>
@@ -368,29 +304,13 @@ function renderTrain() {
   `;
 }
 
-function renderCoach() {
-  const msgs = db.coach.messages;
-  return `
-    ${msgs
-      .map(
-        (m) =>
-          `<article class="msg ${m.role === "user" ? "me" : ""}"><div class="when">${(m.createdAt || "").replace("T", " ").slice(0, 16)} · ${m.role === "coach" ? "教練" : "你"}</div><strong>${m.title || ""}</strong><p style="white-space:pre-wrap;margin:6px 0 0">${m.body}</p></article>`,
-      )
-      .join("") || `<div class="empty">未有教練訊息</div>`}
-    <article class="card">
-      <textarea id="coachNote" aria-label="教練留言" placeholder="例如：而家想加強背部，或者今晚食咗燒味..."></textarea>
-      <button class="btn" id="saveCoach" type="button">傳俾教練紀錄</button>
-    </article>
-  `;
-}
-
 function render() {
   const p = db.profile;
   const b = latest(db.body.records);
   $("greeting").textContent = `${greet()}，${p.displayName}`;
   const { days } = goalProgress(p, b);
   $("goalStrip").textContent = `肌肉型目標 · 仲有 ${days} 日到 ${p.goal.deadline} · 體脂 ${b?.bodyFatPercent ?? "—"}% → ${p.goal.targetBodyFatPercent}%`;
-  $("screen").innerHTML = { home: renderHome, body: renderBody, food: renderFood, train: renderTrain, coach: renderCoach }[route]();
+  $("screen").innerHTML = { body: renderBody, food: renderFood, train: renderTrain }[route]();
   document.querySelectorAll(".tab").forEach((el) => el.classList.toggle("is-active", el.dataset.route === route));
   bindPage();
 }
@@ -414,16 +334,6 @@ function bindPage() {
     selectedMuscle = part.dataset.muscle;
     render();
     $("muscleTrend")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  });
-  $("saveCoach")?.addEventListener("click", () => {
-    const body = $("coachNote").value.trim();
-    if (!body) return;
-    const rec = { id: uid("coach"), createdAt: nowIso(), role: "user", title: "留言", body };
-    queueRecord("coach", rec);
-    db.coach.messages = [rec, ...db.coach.messages];
-    $("coachNote").value = "";
-    toast("已記低。");
-    render();
   });
 }
 
