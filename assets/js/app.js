@@ -3,7 +3,6 @@ import {
   queueRecord,
   getToken,
   setToken,
-  commitJson,
   latest,
   onDate,
   sum,
@@ -19,11 +18,15 @@ import {
 } from "./store.js";
 import { sparkline, ring, composition } from "./charts.js";
 import { mealHealth } from "./meal-tone.js";
+import { muscleStats } from "./muscles.js";
+import { renderBodyMap } from "./body-map.js";
 
 const $ = (id) => document.getElementById(id);
 const routes = ["food", "body", "train", "coach", "home"];
 let db = null;
 let route = "food";
+let bodyView = "front";
+let selectedMuscle = "chest";
 
 function standalone() {
   return window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
@@ -307,6 +310,10 @@ function renderTrain() {
     return dt.toISOString().slice(0, 10);
   });
   const weekCount = db.fitness.records.filter((r) => weekDates.includes(r.date)).length;
+  const stats = muscleStats(db.fitness.records);
+  const part = stats.byId[selectedMuscle] || stats.byId.chest;
+  const trend = (part.series || []).map((p) => p.e1rm || p.volume);
+  const latestLoad = part.series?.at(-1);
   return `
     <article class="hero">
       <div class="label">今日訓練</div>
@@ -317,24 +324,35 @@ function renderTrain() {
       today
         .map(
           (r) => `<article class="card"><strong>${r.title}</strong><div class="fine">${r.durationMin || 0} 分鐘 · ${fmt(r.kcalBurned, 0)} kcal · RPE ${r.rpe ?? "—"}</div>
-          ${(r.exercises || []).map((e) => `<div class="list-item"><span>${e.name}</span><span>${e.sets || ""}×${e.reps || ""} ${e.weightKg ? e.weightKg + "kg" : ""}</span></div>`).join("")}</article>`,
+          ${(r.exercises || []).map((e) => `<div class="list-item"><span>${e.name}</span><span>${e.sets || ""}×${e.reps || e.durationMin || ""} ${e.weightKg ? e.weightKg + "kg" : ""}</span></div>`).join("")}</article>`,
         )
-        .join("") || `<article class="card"><div class="empty">今日未訓練。做完用下面記低。</div></article>`
+        .join("") || `<article class="card"><div class="empty">今日未訓練。喺 Cursor 對話傳器械相，再寫 kg × 組 × 次數／時間，我會入庫。</div></article>`
     }
-    <article class="card">
-      <div class="section-title" style="margin-top:0">記低呢堂</div>
-      <input id="trainTitle" aria-label="訓練標題" value="${plan.title}" />
-      <div class="chips" id="trainType">
-        ${["strength", "cardio", "mobility", "other"]
-          .map((t, i) => `<button class="chip ${i === 0 ? "is-on" : ""}" data-type="${t}" type="button">${{ strength: "力量", cardio: "有氧", mobility: "活動度", other: "其他" }[t]}</button>`)
-          .join("")}
+    <article class="card body-map-card">
+      <div class="section-title" style="margin-top:0">肌群力量<span>越光＝訓練量越高</span></div>
+      <div class="chips" id="bodyViewChips">
+        <button class="chip ${bodyView === "front" ? "is-on" : ""}" data-view="front" type="button">正面</button>
+        <button class="chip ${bodyView === "back" ? "is-on" : ""}" data-view="back" type="button">背面</button>
       </div>
-      <input id="trainMoves" aria-label="訓練動作" placeholder="動作，例如：臥推 4x8 60kg、划船 4x10" />
+      <div class="body-map" id="bodyMap">${renderBodyMap(stats, { view: bodyView, selected: selectedMuscle })}</div>
+      <div class="fine" style="text-align:center">撳一個部位睇力量趨勢</div>
+    </article>
+    <article class="card" id="muscleTrend">
+      <div class="section-title" style="margin-top:0">${part.label}力量<span>${part.sessions || 0} 堂</span></div>
       <div class="grid-2">
-        <input id="trainMin" aria-label="分鐘" inputmode="numeric" placeholder="分鐘" />
-        <input id="trainKcal" aria-label="消耗 kcal" inputmode="decimal" placeholder="消耗 kcal" />
+        <div class="metric"><div class="k">估計 1RM</div><div class="v">${fmt(part.e1rm, 0)}</div><div class="fine">kg</div></div>
+        <div class="metric"><div class="k">累積訓練量</div><div class="v">${fmt(part.volume, 0)}</div><div class="fine">kg·組·次</div></div>
       </div>
-      <button class="btn" id="saveTrain" type="button">存訓練</button>
+      ${
+        trend.length
+          ? sparkline(trend)
+          : `<div class="empty">未有${part.label}趨勢。傳器械相同 kg × 組 × 次數就會喺呢度畫。</div>`
+      }
+      ${
+        latestLoad
+          ? `<div class="fine" style="margin-top:8px">最近 ${latestLoad.date} · ${fmt(latestLoad.e1rm, 0)} kg 1RM · 量 ${fmt(latestLoad.volume, 0)}</div>`
+          : ""
+      }
     </article>
     <article class="card">
       <div class="section-title" style="margin-top:0">最近訓練</div>
@@ -342,7 +360,7 @@ function renderTrain() {
         db.fitness.records.length
           ? db.fitness.records
               .slice(0, 10)
-              .map((r) => `<div class="list-item"><div><strong>${r.title}</strong><div class="fine">${r.date}</div></div><span>${r.durationMin || 0}分</span></div>`)
+              .map((r) => `<div class="list-item"><div><strong>${r.title}</strong><div class="fine">${r.date} · ${(r.exercises || []).map((e) => e.name).join("、") || ""}</div></div><span>${r.durationMin || 0}分</span></div>`)
               .join("")
           : `<div class="empty">未有訓練紀錄</div>`
       }
@@ -377,59 +395,25 @@ function render() {
   bindPage();
 }
 
-function bindChips(id) {
-  const root = $(id);
-  if (!root) return;
-  root.addEventListener("click", (e) => {
-    const btn = e.target.closest(".chip");
-    if (!btn) return;
-    root.querySelectorAll(".chip").forEach((c) => c.classList.toggle("is-on", c === btn));
-  });
-}
-
 function bindPage() {
-  bindChips("trainType");
-  $("saveTrain")?.addEventListener("click", async () => {
-    const title = $("trainTitle").value.trim() || "訓練";
-    const type = document.querySelector("#trainType .chip.is-on")?.dataset.type || "strength";
-    const moves = $("trainMoves").value.trim();
-    const rec = {
-      id: uid("fit"),
-      date: hkDate(),
-      trainedAt: nowIso(),
-      type,
-      title,
-      durationMin: Number($("trainMin").value) || null,
-      kcalBurned: Number($("trainKcal").value) || null,
-      rpe: null,
-      muscleGroups: [],
-      exercises: moves
-        ? moves.split(/[、,，]/).map((name) => ({ name: name.trim(), sets: null, reps: null, weightKg: null }))
-        : [],
-      notes: moves,
-      source: "app",
-    };
-    queueRecord("fitness", rec);
-    db.fitness.records = [rec, ...db.fitness.records];
-    try {
-      const token = getToken();
-      if (token) {
-        const g = db.profile.github;
-        await commitJson({
-          owner: g.owner,
-          repo: g.repo,
-          branch: g.branch,
-          path: "db/fitness.json",
-          json: { version: 1, updatedAt: nowIso(), records: db.fitness.records },
-          token,
-          message: `data: 訓練 ${title}`,
-        });
-        toast("已寫入 GitHub");
-      } else toast("已暫存喺手機。");
-    } catch (err) {
-      toast(err.message);
+  $("bodyViewChips")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-view]");
+    if (!btn) return;
+    bodyView = btn.dataset.view;
+    if (bodyView === "back" && !["shoulders", "back", "triceps", "glutes", "hamstrings", "calves"].includes(selectedMuscle)) {
+      selectedMuscle = "back";
+    }
+    if (bodyView === "front" && !["shoulders", "chest", "biceps", "forearms", "core", "quads", "calves"].includes(selectedMuscle)) {
+      selectedMuscle = "chest";
     }
     render();
+  });
+  $("bodyMap")?.addEventListener("click", (e) => {
+    const part = e.target.closest("[data-muscle]");
+    if (!part) return;
+    selectedMuscle = part.dataset.muscle;
+    render();
+    $("muscleTrend")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
   $("saveCoach")?.addEventListener("click", () => {
     const body = $("coachNote").value.trim();

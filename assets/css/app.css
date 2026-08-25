@@ -481,6 +481,34 @@ textarea { min-height: 96px; resize: vertical; }
   font-weight: 700;
 }
 
+.body-map {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 8px;
+}
+
+.body-svg {
+  width: min(240px, 72%);
+  height: auto;
+  display: block;
+}
+
+.body-sil {
+  fill: #1a1a24;
+  stroke: rgba(61, 158, 255, 0.2);
+  stroke-width: 1;
+}
+
+.body-part {
+  cursor: pointer;
+  stroke-width: 1.2;
+  transition: filter 0.15s ease, stroke 0.15s ease;
+}
+
+.body-part:active {
+  filter: brightness(1.25);
+}
+
 .empty {
   text-align: center;
   color: var(--muted);

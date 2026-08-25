@@ -20,9 +20,9 @@ Kp 嘅身體／飲食／訓練儀表板。資料全部放喺 Git 入面嘅 JSON�
 
 1. **小米體脂截圖** → 我 OCR 之後寫入 `db/body.json`
 2. **飯餐相或文字**（「午餐雞胸 200g 650kcal」）→ `db/food.json`
-3. **訓練內容** → `db/fitness.json`
+3. **訓練器械相 + kg × 組 × 次數／時間** → `db/fitness.json`，人體圖會更新嗰個部位力量同趨勢
 
-寫完會 commit 去 GitHub，dashboard 自動更新。飲食頁冇輸入表格，餐記錄用 Cursor 對話入。
+寫完會 commit 去 GitHub，dashboard 撳重新整理就會更新。飲食同訓練頁都冇輸入表格，一律用 Cursor 對話入。
 
 主畫面 App 右上角有 **重新整理**，可以清 cache 拉最新版。
 
