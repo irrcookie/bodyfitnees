@@ -45,4 +45,7 @@ test("iPhone Web App meta", () => {
   assert.match(js, /蛋白質攝取量/);
   assert.match(js, /脂肪攝取量/);
   assert.match(js, /膽固醇攝取量/);
+  assert.equal(js.includes("快速輸入"), false);
+  assert.match(fs.readFileSync("assets/js/meal-tone.js", "utf8"), /meal-card-good/);
+  assert.match(fs.readFileSync("assets/css/app.css", "utf8"), /meal-card-warn/);
 });

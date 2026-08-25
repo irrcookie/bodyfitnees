@@ -18,6 +18,7 @@ import {
   nowIso,
 } from "./store.js";
 import { sparkline, ring, composition } from "./charts.js";
+import { mealHealth } from "./meal-tone.js";
 
 const $ = (id) => document.getElementById(id);
 const routes = ["food", "body", "train", "coach", "home"];
@@ -254,47 +255,40 @@ function renderFood() {
     ${byMeal
       .map(({ id, rec }) => {
         const meal = p.meals.find((m) => m.id === id);
-        return `<article class="card">
+        return `<article class="card meal-card ${rec ? mealHealth(rec, p).className : ""}">
           <div class="section-title" style="margin-top:0">${meal.label}<span>${meal.remindAt || "隨時"} · ${rec ? "已入" : "未入"}</span></div>
           ${
             rec
-              ? `<div>${rec.items?.map((i) => i.name).join("、") || rec.notes || ""}</div>
-                 <div class="fine">${fmt(rec.totalKcal, 0)} kcal · 蛋白 ${fmt(rec.totalProteinG, 0)}g · 脂肪 ${fmt(rec.totalFatG, 0)}g · 膽固醇 ${fmt(rec.totalCholesterolMg, 0)}mg</div>`
-              : `<div class="fine">未有紀錄。用下面快速輸入。</div>`
+              ? mealRecordBody(rec, p)
+              : `<div class="fine">未有紀錄。喺 Cursor 對話傳餐相或文字就會入庫。</div>`
           }
         </article>`;
       })
       .join("")}
-    <article class="card">
-      <div class="section-title" style="margin-top:0">快速輸入</div>
-      <div class="chips" id="mealChips">
-        ${["breakfast", "lunch", "dinner", "snack"]
-          .map((id) => `<button class="chip ${id === currentMealSlot() ? "is-on" : ""}" data-meal="${id}" type="button">${mealLabel(id)}</button>`)
-          .join("")}
-      </div>
-      <input id="foodItems" aria-label="食物" placeholder="例如：雞胸 200g、白飯、西蘭花" />
-      <div class="grid-2">
-        <input id="foodKcal" aria-label="卡路里 kcal" inputmode="decimal" placeholder="卡路里 kcal" />
-        <input id="foodProtein" aria-label="蛋白質 g" inputmode="decimal" placeholder="蛋白質 g" />
-        <input id="foodFat" aria-label="脂肪 g" inputmode="decimal" placeholder="脂肪 g" />
-        <input id="foodChol" aria-label="膽固醇 mg" inputmode="decimal" placeholder="膽固醇 mg" />
-      </div>
-      <button class="btn" id="saveFood" type="button">存呢餐</button>
-    </article>
-    <div class="section-title">最近紀錄</div>
-    <article class="card">
-      ${
-        history.length
-          ? history
-              .map(
-                (r) =>
-                  `<div class="list-item"><div><strong>${mealLabel(r.meal)}</strong><div class="fine">${r.date} · ${(r.items || []).map((i) => i.name).join("、") || r.notes || ""} · 蛋白 ${fmt(r.totalProteinG, 0)}g · 脂 ${fmt(r.totalFatG, 0)}g · 膽固醇 ${fmt(r.totalCholesterolMg, 0)}mg</div></div><strong>${fmt(r.totalKcal, 0)}</strong></div>`,
-              )
-              .join("")
-          : `<div class="empty">未有飲食紀錄</div>`
-      }
-    </article>
+    <div class="section-title">最近紀錄<span>綠＝高蛋白　黃＝高脂／膽固醇</span></div>
+    ${
+      history.length
+        ? history.map((r) => mealRecordCard(r, p)).join("")
+        : `<article class="card"><div class="empty">未有飲食紀錄。喺 Cursor 對話入餐就會喺呢度出現。</div></article>`
+    }
   `;
+}
+
+function mealRecordBody(rec, nutrition) {
+  const health = mealHealth(rec, nutrition);
+  return `
+    <div>${rec.items?.map((i) => i.name).join("、") || rec.notes || ""}</div>
+    <div class="fine">${fmt(rec.totalKcal, 0)} kcal · 蛋白 ${fmt(rec.totalProteinG, 0)}g · 脂肪 ${fmt(rec.totalFatG, 0)}g · 膽固醇 ${fmt(rec.totalCholesterolMg, 0)}mg</div>
+    <div class="meal-tag meal-tag-${health.tone}">${health.label}</div>
+  `;
+}
+
+function mealRecordCard(rec, nutrition) {
+  const health = mealHealth(rec, nutrition);
+  return `<article class="card meal-card ${health.className}">
+    <div class="section-title" style="margin-top:0">${mealLabel(rec.meal)}<span>${rec.date}</span></div>
+    ${mealRecordBody(rec, nutrition)}
+  </article>`;
 }
 
 function renderTrain() {
@@ -394,47 +388,7 @@ function bindChips(id) {
 }
 
 function bindPage() {
-  bindChips("mealChips");
   bindChips("trainType");
-  $("saveFood")?.addEventListener("click", async () => {
-    const meal = document.querySelector("#mealChips .chip.is-on")?.dataset.meal || currentMealSlot();
-    const text = $("foodItems").value.trim();
-    const kcal = Number($("foodKcal").value);
-    const proteinG = Number($("foodProtein").value);
-    const fatG = Number($("foodFat").value);
-    const chol = Number($("foodChol").value);
-    if (!text && !kcal) return toast("寫低食咗咩或者卡路里");
-    const rec = {
-      id: uid("food"),
-      date: hkDate(),
-      eatenAt: nowIso(),
-      meal,
-      items: text.split(/[、,，]/).map((n) => n.trim()).filter(Boolean).map((name) => ({ name })),
-      totalKcal: Number.isFinite(kcal) && kcal > 0 ? kcal : null,
-      totalProteinG: Number.isFinite(proteinG) && proteinG > 0 ? proteinG : null,
-      totalCarbG: null,
-      totalFatG: Number.isFinite(fatG) && fatG > 0 ? fatG : null,
-      totalCholesterolMg: Number.isFinite(chol) && chol > 0 ? chol : null,
-      notes: text,
-      source: "app",
-    };
-    queueRecord("food", rec);
-    db.food.records = [rec, ...db.food.records.filter((x) => x.id !== rec.id)];
-    try {
-      const token = getToken();
-      if (token) {
-        const next = { version: 1, updatedAt: nowIso(), records: db.food.records };
-        const g = db.profile.github;
-        await commitJson({ owner: g.owner, repo: g.repo, branch: g.branch, path: "db/food.json", json: next, token, message: `data: 飲食 ${mealLabel(meal)}` });
-        toast("已寫入 GitHub");
-      } else {
-        toast("已暫存喺手機。填 GitHub token 或者用 Cursor 同步。");
-      }
-    } catch (err) {
-      toast(err.message);
-    }
-    render();
-  });
   $("saveTrain")?.addEventListener("click", async () => {
     const title = $("trainTitle").value.trim() || "訓練";
     const type = document.querySelector("#trainType .chip.is-on")?.dataset.type || "strength";
@@ -511,17 +465,49 @@ function toast(text) {
   setTimeout(() => n.remove(), 2800);
 }
 
+async function hardRefresh() {
+  toast("重新整理緊…");
+  try {
+    if ("caches" in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => caches.delete(k)));
+    }
+    const regs = "serviceWorker" in navigator ? await navigator.serviceWorker.getRegistrations() : [];
+    await Promise.all(regs.map((r) => r.unregister()));
+  } catch {
+    /* still reload */
+  }
+  const url = new URL(location.href);
+  url.searchParams.set("_r", String(Date.now()));
+  location.replace(url.toString());
+}
+
+function watchServiceWorker(reg) {
+  let reloading = false;
+  reg.update().catch(() => {});
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") reg.update().catch(() => {});
+  });
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  });
+}
+
 function openSettings() {
   const token = getToken();
   $("sheetTitle").textContent = "設定";
   $("sheetBody").innerHTML = `
-    <a class="btn" href="./reminders.ics">加入飲食打卡日曆（09:30／13:30／20:00）</a>
+    <button class="btn" id="refreshNow" type="button">重新整理（清 cache）</button>
+    <a class="btn ghost" href="./reminders.ics">加入飲食打卡日曆（09:30／13:30／20:00）</a>
     <button class="btn ghost row" id="notifyBtn" type="button">允許瀏覽器通知</button>
     <label class="fine">GitHub token（可選）</label>
     <input id="tokenInput" type="password" value="${token}" placeholder="ghp_..." autocomplete="off" aria-label="GitHub token" />
     <button class="btn" id="saveToken" type="button">儲存 token</button>
   `;
   $("sheet").hidden = false;
+  $("refreshNow").onclick = hardRefresh;
   $("saveToken").onclick = () => {
     setToken($("tokenInput").value.trim());
     toast("已儲存");
@@ -562,6 +548,7 @@ async function init() {
       location.hash = a.dataset.route;
     }),
   );
+  $("refreshBtn").onclick = hardRefresh;
   $("settingsBtn").onclick = openSettings;
   $("sheet").addEventListener("click", (e) => {
     if (e.target.dataset.closeSheet !== undefined || e.target.classList.contains("sheet-backdrop")) $("sheet").hidden = true;
@@ -581,7 +568,7 @@ async function init() {
   maybeRemind();
   setInterval(maybeRemind, 30000);
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+    navigator.serviceWorker.register("./sw.js").then(watchServiceWorker).catch(() => {});
   }
 }
 

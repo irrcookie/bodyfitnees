@@ -1,5 +1,59 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-24T16:21:00+08:00",
-  "records": []
+  "updatedAt": "2026-08-24T21:10:00+08:00",
+  "records": [
+    {
+      "id": "food-demo-breakfast",
+      "date": "2026-08-24",
+      "eatenAt": "2026-08-24T09:32:00+08:00",
+      "meal": "breakfast",
+      "items": [
+        { "name": "雞胸 200g", "kcal": 220, "proteinG": 46, "fatG": 3, "cholesterolMg": 62 },
+        { "name": "乳清", "kcal": 120, "proteinG": 24, "fatG": 1, "cholesterolMg": 10 },
+        { "name": "西蘭花", "kcal": 40, "proteinG": 4, "fatG": 0, "cholesterolMg": 0 }
+      ],
+      "totalKcal": 380,
+      "totalProteinG": 74,
+      "totalCarbG": 12,
+      "totalFatG": 4,
+      "totalCholesterolMg": 72,
+      "source": "chat",
+      "notes": "高蛋白示範：雞胸＋乳清"
+    },
+    {
+      "id": "food-demo-lunch",
+      "date": "2026-08-24",
+      "eatenAt": "2026-08-24T13:40:00+08:00",
+      "meal": "lunch",
+      "items": [
+        { "name": "糙米飯", "kcal": 280, "proteinG": 6, "fatG": 2, "cholesterolMg": 0 },
+        { "name": "蒸魚", "kcal": 220, "proteinG": 28, "fatG": 8, "cholesterolMg": 70 },
+        { "name": "青菜", "kcal": 50, "proteinG": 3, "fatG": 2, "cholesterolMg": 0 }
+      ],
+      "totalKcal": 550,
+      "totalProteinG": 37,
+      "totalCarbG": 62,
+      "totalFatG": 12,
+      "totalCholesterolMg": 70,
+      "source": "chat",
+      "notes": "均衡示範"
+    },
+    {
+      "id": "food-demo-dinner",
+      "date": "2026-08-24",
+      "eatenAt": "2026-08-24T20:15:00+08:00",
+      "meal": "dinner",
+      "items": [
+        { "name": "叉燒飯", "kcal": 720, "proteinG": 28, "fatG": 28, "cholesterolMg": 95 },
+        { "name": "燒肉", "kcal": 260, "proteinG": 16, "fatG": 18, "cholesterolMg": 85 }
+      ],
+      "totalKcal": 980,
+      "totalProteinG": 44,
+      "totalCarbG": 90,
+      "totalFatG": 46,
+      "totalCholesterolMg": 180,
+      "source": "chat",
+      "notes": "高脂／膽固醇示範：燒味"
+    }
+  ]
 }
