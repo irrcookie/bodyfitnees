@@ -12,7 +12,7 @@ Kp 嘅身體／飲食／訓練儀表板。資料全部放喺 Git 入面嘅 JSON�
 | 身體（小米） | `db/schema/body.schema.json` | `db/body.json` |
 | 訓練 | `db/schema/fitness.schema.json` | `db/fitness.json` |
 
-另外：`db/profile.json`（170cm／28歲／11月肌肉型目標）、`db/coach.json`（每日建議）。
+另外：`db/profile.json`（170cm／28歲／11月肌肉型目標）、`db/coach.json`（每日建議）、`db/brands.md`（常用牌子，而家有 Body Attack whey）。
 
 ## 點樣同我溝通（Cursor 對話）
 
