@@ -1,7 +1,33 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T19:40:00+08:00",
+  "updatedAt": "2026-08-26T23:05:00+08:00",
   "records": [
+    {
+      "id": "food-20260826-snack-sushiro",
+      "eatenAt": "2026-08-26T23:05:00+08:00",
+      "date": "2026-08-26",
+      "meal": "snack",
+      "items": [
+        {
+          "name": "壽司郎三文魚握壽司",
+          "amount": 6,
+          "unit": "碟",
+          "kcal": 750,
+          "proteinG": 48,
+          "carbG": 78,
+          "fatG": 30,
+          "cholesterolMg": 210
+        }
+      ],
+      "totalKcal": 750,
+      "totalProteinG": 48,
+      "totalCarbG": 78,
+      "totalFatG": 30,
+      "totalCholesterolMg": 210,
+      "photoNote": "壽司郎銀碟兩貫三文魚握，魚片大、油花明顯。用戶話食咗六碟（12 貫）。",
+      "source": "chat",
+      "notes": "由餐相估算；按大切／油花偏多嘅三文魚握一皿約 125 kcal。23:05 當小食，唔覆蓋吉野家晚餐。"
+    },
     {
       "id": "food-20260826-dinner-yoshinoya",
       "eatenAt": "2026-08-26T19:40:00+08:00",
