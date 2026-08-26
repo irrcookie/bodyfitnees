@@ -1,7 +1,63 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T12:03:00+08:00",
+  "updatedAt": "2026-08-26T14:03:00+08:00",
   "records": [
+    {
+      "id": "food-20260826-lunch-pork-fried-rice",
+      "eatenAt": "2026-08-26T14:03:00+08:00",
+      "date": "2026-08-26",
+      "meal": "lunch",
+      "items": [
+        {
+          "name": "豉油炒飯（飯+油+洋蔥+蔥）",
+          "amount": 350,
+          "unit": "g",
+          "kcal": 580,
+          "proteinG": 8,
+          "carbG": 90,
+          "fatG": 20,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "豬頸肉",
+          "amount": 100,
+          "unit": "g",
+          "kcal": 270,
+          "proteinG": 20,
+          "carbG": 1,
+          "fatG": 21,
+          "cholesterolMg": 75
+        },
+        {
+          "name": "炒蛋",
+          "amount": 45,
+          "unit": "g",
+          "kcal": 70,
+          "proteinG": 6,
+          "carbG": 1,
+          "fatG": 5,
+          "cholesterolMg": 170
+        },
+        {
+          "name": "凍檸茶",
+          "amount": 400,
+          "unit": "ml",
+          "kcal": 150,
+          "proteinG": 0,
+          "carbG": 38,
+          "fatG": 0,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 1070,
+      "totalProteinG": 34,
+      "totalCarbG": 130,
+      "totalFatG": 46,
+      "totalCholesterolMg": 245,
+      "photoNote": "餐廳一份深色豉油豬頸肉炒飯，飯底油光、洋蔥蔥花同炒蛋，兩片青瓜；金屬杯凍檸茶連檸檬片。",
+      "source": "chat",
+      "notes": "由餐相估算餐廳一份；豬頸肉偏肥、炒飯油同凍檸茶糖分偏高。"
+    },
     {
       "id": "food-20260826-snack-banana",
       "eatenAt": "2026-08-26T12:03:00+08:00",
