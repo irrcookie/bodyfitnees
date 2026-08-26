@@ -1,7 +1,73 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T14:03:00+08:00",
+  "updatedAt": "2026-08-26T19:40:00+08:00",
   "records": [
+    {
+      "id": "food-20260826-dinner-yoshinoya",
+      "eatenAt": "2026-08-26T19:40:00+08:00",
+      "date": "2026-08-26",
+      "meal": "dinner",
+      "items": [
+        {
+          "name": "白飯",
+          "amount": 250,
+          "unit": "g",
+          "kcal": 330,
+          "proteinG": 6,
+          "carbG": 72,
+          "fatG": 1,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "洋葱牛肉",
+          "amount": 80,
+          "unit": "g",
+          "kcal": 260,
+          "proteinG": 18,
+          "carbG": 14,
+          "fatG": 16,
+          "cholesterolMg": 55
+        },
+        {
+          "name": "炸蝦",
+          "amount": 4,
+          "unit": "隻",
+          "kcal": 320,
+          "proteinG": 20,
+          "carbG": 22,
+          "fatG": 18,
+          "cholesterolMg": 160
+        },
+        {
+          "name": "忌廉白汁",
+          "amount": 180,
+          "unit": "g",
+          "kcal": 300,
+          "proteinG": 5,
+          "carbG": 20,
+          "fatG": 22,
+          "cholesterolMg": 45
+        },
+        {
+          "name": "西蘭花／椰菜",
+          "amount": 80,
+          "unit": "g",
+          "kcal": 25,
+          "proteinG": 2,
+          "carbG": 4,
+          "fatG": 0,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 1235,
+      "totalProteinG": 51,
+      "totalCarbG": 132,
+      "totalFatG": 57,
+      "totalCholesterolMg": 260,
+      "photoNote": "吉野家幾何紋碗：白飯、洋葱牛肉、4隻炸蝦、西蘭花同椰菜，碗底厚忌廉白汁。旁邊另一碗唔計。",
+      "source": "chat",
+      "notes": "由餐相估算吉野家一份丼；炸蝦同白汁拉高脂肪同膽固醇。"
+    },
     {
       "id": "food-20260826-lunch-pork-fried-rice",
       "eatenAt": "2026-08-26T14:03:00+08:00",
