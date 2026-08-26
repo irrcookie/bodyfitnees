@@ -1,5 +1,59 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-24T16:21:00+08:00",
-  "records": []
+  "updatedAt": "2026-08-26T22:06:00+08:00",
+  "records": [
+    {
+      "id": "fit-20260826-upper",
+      "trainedAt": "2026-08-26T22:06:00+08:00",
+      "date": "2026-08-26",
+      "type": "strength",
+      "title": "上肢（胸＋背）",
+      "durationMin": 50,
+      "kcalBurned": null,
+      "exercises": [
+        {
+          "name": "器械胸推",
+          "sets": 4,
+          "reps": 8,
+          "weightKg": 15,
+          "muscleGroups": ["chest", "triceps", "shoulders"],
+          "notes": "Hammer Strength 單邊 15kg 片"
+        },
+        {
+          "name": "坐姿划船",
+          "sets": 4,
+          "reps": 8,
+          "weightKg": 17.5,
+          "muscleGroups": ["back", "biceps"]
+        },
+        {
+          "name": "高位划船",
+          "sets": 4,
+          "reps": 8,
+          "weightKg": 15,
+          "muscleGroups": ["back"],
+          "notes": "Hammer Strength 胸墊划船"
+        },
+        {
+          "name": "下拉",
+          "sets": 4,
+          "reps": 8,
+          "weightKg": 13.75,
+          "muscleGroups": ["back", "biceps"],
+          "notes": "Life Fitness 拉力器"
+        },
+        {
+          "name": "托臂彎舉",
+          "sets": 4,
+          "reps": 8,
+          "weightKg": 16,
+          "muscleGroups": ["biceps"]
+        }
+      ],
+      "muscleGroups": ["chest", "shoulders", "triceps", "back", "biceps"],
+      "rpe": 7,
+      "source": "chat",
+      "notes": "由 5 張器械相 + 編號重量入庫。各動作 8 次 × 4 組。週三時間表係主動恢復，實際練咗胸背二頭。"
+    }
+  ]
 }
