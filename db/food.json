@@ -1,7 +1,33 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T09:18:00+08:00",
+  "updatedAt": "2026-08-26T12:03:00+08:00",
   "records": [
+    {
+      "id": "food-20260826-snack-banana",
+      "eatenAt": "2026-08-26T12:03:00+08:00",
+      "date": "2026-08-26",
+      "meal": "snack",
+      "items": [
+        {
+          "name": "香蕉",
+          "amount": 1,
+          "unit": "隻",
+          "kcal": 105,
+          "proteinG": 1.3,
+          "carbG": 27,
+          "fatG": 0.4,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 105,
+      "totalProteinG": 1.3,
+      "totalCarbG": 27,
+      "totalFatG": 0.4,
+      "totalCholesterolMg": 0,
+      "photoNote": "書枱上一隻已熟黃蕉，頂部剝咗少少皮，無其他食物。",
+      "source": "chat",
+      "notes": "由餐相估算一隻中等熟蕉（約 105 kcal）。12:03 唔係正餐，當小食；午餐位留空。"
+    },
     {
       "id": "food-20260826-breakfast-whey",
       "eatenAt": "2026-08-26T09:18:00+08:00",
