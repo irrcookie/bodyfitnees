@@ -20,11 +20,16 @@ test("冇 dummy 餐", () => {
 
 test("小米種子數據", () => {
   const body = readJson("db/body.json");
-  const row = body.records[0];
+  const row = body.records.find((r) => r.id === "body-20260823-2136");
+  assert.ok(row);
   assert.equal(row.weightKg, 72.7);
   assert.equal(row.bodyFatPercent, 22.7);
   assert.equal(row.muscleMassKg, 53.3);
   assert.equal(row.bodyType, "肥胖");
+  const latest = body.records[0];
+  assert.equal(latest.id, "body-20260826-0904");
+  assert.equal(latest.weightKg, 70.7);
+  assert.equal(latest.bodyFatPercent, 21.9);
 });
 
 test("營養參考分開", () => {
