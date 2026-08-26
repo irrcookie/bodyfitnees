@@ -11,6 +11,7 @@
 | 訓練紀錄 | `db/fitness.json` + `db/schema/fitness.schema.json` | 力量／有氧 |
 | 個人同目標 | `db/profile.json` | 170cm、28歲、11月肌肉型 |
 | 教練訊息 | `db/coach.json` | 每日建議 |
+| 常用牌子 | `db/brands.md` | 蛋白粉等固定產品營養 |
 
 寫入規則：
 

@@ -1,7 +1,33 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-25T21:39:00+08:00",
+  "updatedAt": "2026-08-26T09:18:00+08:00",
   "records": [
+    {
+      "id": "food-20260826-breakfast-whey",
+      "eatenAt": "2026-08-26T09:18:00+08:00",
+      "date": "2026-08-26",
+      "meal": "breakfast",
+      "items": [
+        {
+          "name": "Body Attack 100% Irish Whey 蛋白粉（清水沖）",
+          "amount": 50,
+          "unit": "g",
+          "kcal": 190,
+          "proteinG": 43.7,
+          "carbG": 2.7,
+          "fatG": 0.4,
+          "cholesterolMg": 10
+        }
+      ],
+      "totalKcal": 190,
+      "totalProteinG": 43.7,
+      "totalCarbG": 2.7,
+      "totalFatG": 0.4,
+      "totalCholesterolMg": 10,
+      "photoNote": "Body Attack 100% Irish Whey 1800g 罐底標籤：50g 粉 + 250ml 水 = 190 kcal、蛋白 43.7g。",
+      "source": "chat",
+      "notes": "用戶寫 50 mL；按罐標 50g 粉 + 水入帳。牌子見 db/brands.md。膽固醇標籤無寫，isolate whey 估 10mg。"
+    },
     {
       "id": "food-20260825-dinner-sushi",
       "eatenAt": "2026-08-25T21:39:00+08:00",

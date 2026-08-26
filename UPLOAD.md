@@ -34,6 +34,10 @@ Timestamp 用對話時間轉 HKT。餐段：
 `date`：`2026-08-25`  
 `id`：`food-20260825-lunch-carbonara`、`fit-20260825-leg-press`、`body-20260823-2136`
 
+## 常用牌子 `db/brands.md`
+
+固定產品營養寫喺 [`db/brands.md`](db/brands.md)。而家有 **Body Attack 100% Irish Whey**（Kp 朝早預設 50g 粉 + 水）。之後講「飲蛋白粉」就跟呢份，唔使再估。新牌子 chat 俾相就加落去。
+
 ## 飲食 `db/food.json`
 
 每日參考（`db/profile.json`）：kcal **2200**、蛋白 **160g**、脂肪 **70g**、膽固醇 **300mg**。餐份額：早 0.25 / 午 0.35 / 晚 0.3 / 小食 0.1。
