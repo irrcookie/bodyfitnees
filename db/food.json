@@ -1,7 +1,33 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-27T20:50:00+08:00",
+  "updatedAt": "2026-08-27T21:28:00+08:00",
   "records": [
+    {
+      "id": "food-20260827-snack-oysters",
+      "eatenAt": "2026-08-27T21:28:00+08:00",
+      "date": "2026-08-27",
+      "meal": "snack",
+      "items": [
+        {
+          "name": "室津生蠔（連殼冷凍、生食用）",
+          "amount": 6,
+          "unit": "隻",
+          "kcal": 144,
+          "proteinG": 15.8,
+          "carbG": 11.3,
+          "fatG": 3.4,
+          "cholesterolMg": 120
+        }
+      ],
+      "totalKcal": 144,
+      "totalProteinG": 16,
+      "totalCarbG": 11,
+      "totalFatG": 3,
+      "totalCholesterolMg": 120,
+      "photoNote": "袋正面 TSUDAU OYSTER HYOGO 室津、6個入；袋背 栄養成分表示 per 100g 表；水槽／雲石枱面。",
+      "source": "chat",
+      "notes": "用戶話食六隻。營養跟袋背 100g 標籤 × 估 240g 可食部（每隻約 40g 肉）。膽固醇標籤無寫，估 50mg/100g。"
+    },
     {
       "id": "food-20260827-dinner-chicken-rice",
       "eatenAt": "2026-08-27T20:50:00+08:00",
