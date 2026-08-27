@@ -1,7 +1,103 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-27T11:01:00+08:00",
+  "updatedAt": "2026-08-27T13:36:00+08:00",
   "records": [
+    {
+      "id": "food-20260827-lunch-seafood-don",
+      "eatenAt": "2026-08-27T13:34:00+08:00",
+      "date": "2026-08-27",
+      "meal": "lunch",
+      "items": [
+        {
+          "name": "白飯",
+          "amount": 220,
+          "unit": "g",
+          "kcal": 320,
+          "proteinG": 6,
+          "carbG": 70,
+          "fatG": 1,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "大蝦",
+          "amount": 50,
+          "unit": "g",
+          "kcal": 55,
+          "proteinG": 12,
+          "carbG": 0,
+          "fatG": 1,
+          "cholesterolMg": 95
+        },
+        {
+          "name": "吞拿魚刺身",
+          "amount": 50,
+          "unit": "g",
+          "kcal": 55,
+          "proteinG": 12,
+          "carbG": 0,
+          "fatG": 1,
+          "cholesterolMg": 19
+        },
+        {
+          "name": "白身魚／帶子刺身",
+          "amount": 40,
+          "unit": "g",
+          "kcal": 40,
+          "proteinG": 8,
+          "carbG": 0,
+          "fatG": 1,
+          "cholesterolMg": 16
+        },
+        {
+          "name": "三文魚籽",
+          "amount": 18,
+          "unit": "g",
+          "kcal": 50,
+          "proteinG": 6,
+          "carbG": 0,
+          "fatG": 3,
+          "cholesterolMg": 86
+        },
+        {
+          "name": "玉子燒",
+          "amount": 60,
+          "unit": "g",
+          "kcal": 105,
+          "proteinG": 7,
+          "carbG": 6,
+          "fatG": 6,
+          "cholesterolMg": 210
+        },
+        {
+          "name": "蔥／紫蘇／海苔／碎米",
+          "amount": 35,
+          "unit": "g",
+          "kcal": 70,
+          "proteinG": 2,
+          "carbG": 13,
+          "fatG": 1,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "金平牛蒡蘿蔔（連枝豆）",
+          "amount": 80,
+          "unit": "g",
+          "kcal": 120,
+          "proteinG": 4,
+          "carbG": 16,
+          "fatG": 5,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 815,
+      "totalProteinG": 57,
+      "totalCarbG": 105,
+      "totalFatG": 19,
+      "totalCholesterolMg": 426,
+      "photoNote": "淺木托盤日式海鮮飯套餐：主碗白飯上面有一隻連頭殼大蝦、吞拿魚同白身魚／帶子刺身、一匙三文魚籽、玉子燒丁、大量蔥花、紫蘇絲、海苔絲、芥辣同彩色碎米；長方碟有金平牛蒡蘿蔔同少許枝豆、兩片玉子燒；細圓碟豉油；棕色急須（綠茶／だし，未淋飯所以 0 kcal）；木筷、木匙同餐巾。",
+      "source": "chat",
+      "notes": "由餐相估算餐廳一份海鮮飯套餐。豉油同茶壺唔計熱量。三文魚籽、玉子燒同大蝦拉高膽固醇。"
+    },
     {
       "id": "food-20260827-breakfast-banana-coffee",
       "eatenAt": "2026-08-27T11:00:00+08:00",
