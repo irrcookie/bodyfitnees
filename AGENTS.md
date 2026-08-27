@@ -24,11 +24,13 @@
 
 入庫步驟、JSON 模板、餐段同估算表：**先讀 [`UPLOAD.md`](UPLOAD.md)**，唔使再翻 schema。
 
-Kp 會喺 **Cursor 對話**傳：
+Kp **只會喺 Cursor／Grok Bot 對話傳相**（可加一句短 caption）。**冇網頁 form。** Agent 自己分類相（餐／小米體脂截圖／健身器械），跟 UPLOAD.md append JSON、validate、由 `origin/main` 開 `cursor/<short>-b07f` **data-only PR**。**Validate／CI 綠咗就自己 regular merge 去 `main`**（commit 用 `Merge pull request #N from irrcookie/cursor/<short>-b07f`）。**唔使等 Kp 講 push 或 merge。** GitHub Pages／PWA 跟住自動更新，Kp 撳重新整理就見到。
+
+**唔好**問佢確認 macros、餐段、或者要唔要 push。
 
 - 小米人體成分報告截圖 → OCR 之後寫入 `db/body.json`
-- 飯餐相或文字 → 寫入 `db/food.json`
-- 訓練內容 → 寫入 `db/fitness.json`
+- 飯餐相 → 寫入 `db/food.json`
+- 器械相（caption 可有 kg × 組 × 次數）→ 寫入 `db/fitness.json`
 
 OCR 小米報告時要盡量填晒 schema 欄位（體重、BMI、體脂、肌肉量、內臟脂肪、BMR、成分組成等）。截圖係傳統中文 label。
 
@@ -56,7 +58,7 @@ OCR 小米報告時要盡量填晒 schema 欄位（體重、BMI、體脂、肌�
 |---|---|---|
 | 飲食提醒 | `.github/workflows/meal-reminder.yml` | 09:30 / 13:30 / 20:00 HKT |
 | 每日教練 | `.github/workflows/daily-coach.yml` | 根據 DB 寫 `db/coach.json` |
-| 入庫 | `.github/workflows/ingest.yml` | Issue 表單 → JSON |
+| 入庫 | `.github/workflows/ingest.yml` | Issue 表單 → JSON（後備；Kp 日常係 Cursor 傳相） |
 | 資料驗證 | `.github/workflows/validate.yml` | schema |
 | QA UI | `.github/workflows/qa-ui.yml` | iPhone 16 Pro Max viewport |
 | Debug | `.github/workflows/debug.yml` | Issue `bot-debug` |

@@ -1,8 +1,8 @@
 # Cursor 入庫快徑
 
-Agent 見到餐相／器械相／小米截圖，**先跟呢份做**，唔使再翻 schema、UI、舊 PR。目標：判斷 → 寫 JSON → validate → commit/PR → 粵語覆，一次過做完。
+Agent 見到餐相／器械相／小米截圖，**先跟呢份做**，唔使再翻 schema、UI、舊 PR。目標：判斷 → 寫 JSON → validate → 開 PR → CI 綠就自己 merge 去 `main` → 粵語覆，一次過做完。
 
-用家只喺 **Cursor 對話**傳相或文字。網頁冇飲食／訓練表格。
+Kp **只喺 Cursor／Grok Bot 對話傳相**（可以加一句短 caption）。**冇網頁 form**。Agent 自己分類相（餐／小米體脂／健身器械），跟下面規則入庫。**唔好**問佢確認 macros、餐段、或者要唔要 push／merge。
 
 ## 60 秒流程
 
@@ -10,14 +10,15 @@ Agent 見到餐相／器械相／小米截圖，**先跟呢份做**，唔使再�
 2. 用 **香港時間 `+08:00`**。`id` 唔好含 `demo`。
 3. **Append** `db/*.json` 最前或最後都可以，**唔好刪舊 record**。改檔頂 `updatedAt`。
 4. `node scripts/validate-db.mjs`
-5. 由 `origin/main` 開 `cursor/<short-name>-b07f`，commit、push、開 PR（data 同 UI 分開）。
-6. 粵語覆：記咗咩、macros／重量、離 11 月目標幾遠、下一餐或訓練建議。
+5. 由 `origin/main` 開 `cursor/<short-name>-b07f`，commit、push、開 **data-only PR**（data 同 UI 分開）。
+6. **Validate／CI 綠咗之後，agent 自己 regular merge 去 `main`**（commit 用 `Merge pull request #N from irrcookie/cursor/<short>-b07f`）。**唔使等 Kp 講 push 或 merge**。現有 Pages workflow 會自動 deploy，Kp 喺 PWA 撳重新整理就見到新數據。
+7. 粵語覆：記咗咩、macros／重量、離 11 月目標幾遠、下一餐或訓練建議。
 
 | 傳來嘅嘢 | 寫入 | `source` |
 |---|---|---|
-| 飯餐相或「午餐雞胸 200g」 | `db/food.json` | `chat` |
+| 飯餐相（可加短 caption） | `db/food.json` | `chat` |
 | 小米人體成分報告截圖 | `db/body.json` | `xiaomi` / `ocr` |
-| 器械相 + `kg × 組 × 次數` 或時間 | `db/fitness.json` | `chat` |
+| 器械相（caption 可寫 `kg × 組 × 次數` 或時間） | `db/fitness.json` | `chat` |
 
 ## 時間同餐段
 
@@ -92,7 +93,7 @@ Timestamp 用對話時間轉 HKT。餐段：
 
 ## 訓練 `db/fitness.json`
 
-用家格式：器械相 + `kg × 組 × 次數`（或時間）。一個動作一行都可以。空 fitness 陣列直到第一堂真訓練，**唔好造 dummy workout**。
+用家格式：器械相，caption 可寫 `kg × 組 × 次數`（或時間）。一個動作一行都可以。空 fitness 陣列直到第一堂真訓練，**唔好造 dummy workout**。相入面睇到重量／組數就直接入，**唔好**再問 Kp 確認。
 
 `muscleGroups` 只准：`chest` `shoulders` `biceps` `triceps` `forearms` `back` `core` `quads` `glutes` `hamstrings` `calves`。名入面有蹲／腿伸 → quads；臥推 → chest；划船／下拉 → back。詳情 `assets/js/muscles.js` 關鍵字。
 
@@ -143,9 +144,18 @@ node scripts/validate-db.mjs
 git add db/<file>.json
 git commit -m "Log lunch: …"
 git push -u origin cursor/<descriptive>-b07f
+# 開 data-only PR，base = main
 ```
 
-PR 標題短、body 寫估算數字。data PR 唔好夾雜 UI。merge 之後用家喺 PWA 撳重新整理。
+PR 標題短、body 寫估算數字。data PR 唔好夾雜 UI。
+
+**CI（validate）綠咗就自己 merge**，用 GitHub **regular merge**（唔好 squash／rebase），commit 風格同之前一樣：
+
+```
+Merge pull request #N from irrcookie/cursor/<short>-b07f
+```
+
+**唔好停手等 Kp 講「push」或「merge」。** merge 去 `main` 之後，GitHub Pages／PWA 會自動更新；Kp 只要撳重新整理。
 
 ## 覆用家（粵語）
 
@@ -166,3 +176,5 @@ PR 標題短、body 寫估算數字。data PR 唔好夾雜 UI。merge 之後用�
 - 唔好喺網頁加輸入 form
 - 唔好為咗入一餐去改 CSS／tab
 - 相片含糊就估算並寫 `notes`，唔好追問先停手（Cloud Agent 無得問）
+- 唔好問 Kp 確認 macros、餐段、或者要唔要 push／merge
+- 唔好等 Kp 講「push」或「merge」先入庫／合入 `main`

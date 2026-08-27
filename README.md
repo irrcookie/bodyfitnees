@@ -18,17 +18,15 @@ Kp 嘅身體／飲食／訓練儀表板。資料全部放喺 Git 入面嘅 JSON�
 
 Agent 入庫快徑：[`UPLOAD.md`](UPLOAD.md)。
 
-直接喺呢個 chat 傳：
+Kp 喺 Cursor／Grok Bot chat **只傳相**（可加一句短 caption）。**唔使填網頁 form**，亦唔使確認 macros、餐段、或者講「push／merge」。
 
-1. **小米體脂截圖** → 我 OCR 之後寫入 `db/body.json`
-2. **飯餐相或文字**（「午餐雞胸 200g 650kcal」）→ `db/food.json`
-3. **訓練器械相 + kg × 組 × 次數／時間** → `db/fitness.json`，人體圖會更新嗰個部位力量同趨勢
+直接傳：
 
-寫完會 commit 去 GitHub，dashboard 撳重新整理就會更新。飲食同訓練頁都冇輸入表格，一律用 Cursor 對話入。
+1. **小米體脂截圖** → OCR 之後寫入 `db/body.json`
+2. **飯餐相** → `db/food.json`
+3. **訓練器械相**（caption 可寫 kg × 組 × 次數／時間）→ `db/fitness.json`，人體圖會更新嗰個部位力量同趨勢
 
-主畫面 App 右上角有 **重新整理**，可以清 cache 拉最新版。
-
-亦可以喺 GitHub 開 Issue 表單（飲食／訓練），`ingest` bot 會入庫。
+Agent 會自己分類、入庫、validate、開 data-only PR，**CI 綠咗就自己 merge 去 `main`**。GitHub Pages／PWA 會跟住自動更新。Kp 喺主畫面 App 撳 **重新整理** 就見到最新數據。飲食同訓練頁都冇輸入表格。
 
 ## iPhone 加入主畫面
 
