@@ -48,5 +48,6 @@ test("飲食卡選中態", () => {
   const on = kcalIntakeCard({ eaten: 1070, burned: 0, target: 2200, selected: true });
   const off = kcalIntakeCard({ eaten: 1070, burned: 0, target: 2200, selected: false });
   assert.match(on, /is-selected/);
+  assert.match(on, /趨勢/);
   assert.equal(off.includes("is-selected"), false);
 });

@@ -93,7 +93,7 @@ function intakeCard(title, current, target, unit, color, { metric = "", selected
     ? `data-metric="${metric}" role="button" tabindex="0" aria-pressed="${selected ? "true" : "false"}"`
     : "";
   return `<article class="card intake-card ${over ? "over" : ""} ${metric ? "metric-tap" : ""} ${selected ? "is-selected" : ""}" ${attrs}>
-    <div class="section-title" style="margin-top:0">${title}<span>參考 ${fmt(target, 0)} ${unit}${over ? " · 超標" : ""}</span></div>
+    <div class="section-title" style="margin-top:0">${title}<span>參考 ${fmt(target, 0)} ${unit}${over ? " · 超標" : ""}${selected ? " · 趨勢" : ""}</span></div>
     <div class="stat-row">
       ${ring(pct, unit, color)}
       <div>
