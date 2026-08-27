@@ -41,4 +41,12 @@ test("飲食卡有訓練時紫色扣減", () => {
   assert.match(html, /has-burn/);
   assert.match(html, /進食/);
   assert.match(html, /訓練消耗/);
+  assert.match(html, /data-metric="kcal"/);
+});
+
+test("飲食卡選中態", () => {
+  const on = kcalIntakeCard({ eaten: 1070, burned: 0, target: 2200, selected: true });
+  const off = kcalIntakeCard({ eaten: 1070, burned: 0, target: 2200, selected: false });
+  assert.match(on, /is-selected/);
+  assert.equal(off.includes("is-selected"), false);
 });

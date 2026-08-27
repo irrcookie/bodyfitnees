@@ -15,6 +15,8 @@ validateAll();
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "assets/css/app.css"), "utf8");
 const js = fs.readFileSync(path.join(root, "assets/js/app.js"), "utf8");
+const foodDayJs = fs.readFileSync(path.join(root, "assets/js/food-day.js"), "utf8");
+const chartsJs = fs.readFileSync(path.join(root, "assets/js/charts.js"), "utf8");
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
 
 check("PWA display", manifest.display === "standalone", "manifest 要 standalone");
@@ -42,10 +44,12 @@ check("no setup banner", !js.includes("加入主畫面"), "網頁唔使 setup �
 check("no food form", !js.includes("快速輸入") && !js.includes("存呢餐"), "飲食用 Cursor 入，唔使網頁表格");
 check("no train form", !js.includes("記低呢堂") && !js.includes("存訓練"), "訓練用 Cursor 入，唔使網頁表格");
 check("body map", js.includes("bodyMap") && js.includes("肌群力量"), "訓練頁要有人體肌群圖");
-check("meal colours", js.includes("mealHealth") && css.includes("meal-card-good") && css.includes("meal-card-warn"), "最近紀錄要有綠／黃背景");
+check("meal colours", js.includes("mealHealth") && css.includes("meal-card-good") && css.includes("meal-card-warn"), "時間軸餐列要有綠／黃背景");
+check("food timeline", js.includes("day-timeline") && foodDayJs.includes("宵夜") && !js.includes("最近紀錄") && css.includes("time-band"), "飲食頁用今日時間軸，唔要四格餐卡同最近紀錄");
+check("food trend", chartsJs.includes("baselineTrend") && js.includes("data-metric") && css.includes("is-selected"), "飲食趨勢線要可用數據卡切換");
 check("refresh", html.includes("refreshBtn") && js.includes("hardRefresh"), "主畫面要有重新整理");
 check("calendar", fs.existsSync(path.join(root, "reminders.ics")), "要有 Apple 日曆檔");
-check("sw", fs.existsSync(path.join(root, "sw.js")) && fs.readFileSync(path.join(root, "sw.js"), "utf8").includes("bodyfit-v7"), "要有新版 service worker");
+check("sw", fs.existsSync(path.join(root, "sw.js")) && fs.readFileSync(path.join(root, "sw.js"), "utf8").includes("bodyfit-v8"), "要有新版 service worker");
 check("train kcal on food", js.includes("kcalIntakeCard") && css.includes("kcal-burn-label") && fs.existsSync(path.join(root, "assets/js/kcal-burn.js")), "飲食卡路里要分色顯示訓練消耗");
 check("muscle map vectors", fs.existsSync(path.join(root, "assets/js/vendor/male-front.js")) && fs.existsSync(path.join(root, "assets/js/vendor/male-back.js")), "要有 MuscleMap 解剖向量");
 check("iphone width", /min\(440px/.test(css), "欄寬要貼 iPhone 16 Pro Max 440px");
