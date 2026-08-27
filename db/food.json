@@ -1,7 +1,43 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T23:05:00+08:00",
+  "updatedAt": "2026-08-27T11:01:00+08:00",
   "records": [
+    {
+      "id": "food-20260827-breakfast-banana-coffee",
+      "eatenAt": "2026-08-27T11:00:00+08:00",
+      "date": "2026-08-27",
+      "meal": "breakfast",
+      "items": [
+        {
+          "name": "香蕉",
+          "amount": 1,
+          "unit": "隻",
+          "kcal": 105,
+          "proteinG": 1.3,
+          "carbG": 27,
+          "fatG": 0.4,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "無糖黑咖啡",
+          "amount": 1,
+          "unit": "杯",
+          "kcal": 5,
+          "proteinG": 0.3,
+          "carbG": 0,
+          "fatG": 0,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 110,
+      "totalProteinG": 2,
+      "totalCarbG": 27,
+      "totalFatG": 0,
+      "totalCholesterolMg": 0,
+      "photoNote": "書枱俯拍：左邊一隻完整熟黃蕉；細白瓷杯有黑色書法字，杯入面係深色無奶液體（當無糖黑咖啡）。背景 HP 筆電同紙巾唔計。",
+      "source": "chat",
+      "notes": "由餐相估算；11:00 餐段邊界，當早餐不當午餐。香蕉同一隻昨日小食（105 kcal）；黑咖啡約 5 kcal，亦可能係茶，熱量同樣約 2–5 kcal。"
+    },
     {
       "id": "food-20260826-snack-sushiro",
       "eatenAt": "2026-08-26T23:05:00+08:00",
