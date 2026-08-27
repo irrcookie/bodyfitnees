@@ -1,7 +1,73 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-27T13:36:00+08:00",
+  "updatedAt": "2026-08-27T20:50:00+08:00",
   "records": [
+    {
+      "id": "food-20260827-dinner-chicken-rice",
+      "eatenAt": "2026-08-27T20:50:00+08:00",
+      "date": "2026-08-27",
+      "meal": "dinner",
+      "items": [
+        {
+          "name": "海南雞連皮",
+          "amount": 160,
+          "unit": "g",
+          "kcal": 325,
+          "proteinG": 33,
+          "carbG": 0,
+          "fatG": 21,
+          "cholesterolMg": 135
+        },
+        {
+          "name": "雞油飯",
+          "amount": 230,
+          "unit": "g",
+          "kcal": 415,
+          "proteinG": 6,
+          "carbG": 72,
+          "fatG": 14,
+          "cholesterolMg": 12
+        },
+        {
+          "name": "青瓜",
+          "amount": 30,
+          "unit": "g",
+          "kcal": 5,
+          "proteinG": 0,
+          "carbG": 1,
+          "fatG": 0,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "辣椒薑蓉",
+          "amount": 25,
+          "unit": "g",
+          "kcal": 35,
+          "proteinG": 1,
+          "carbG": 5,
+          "fatG": 2,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "清雞湯",
+          "amount": 250,
+          "unit": "ml",
+          "kcal": 50,
+          "proteinG": 4,
+          "carbG": 2,
+          "fatG": 3,
+          "cholesterolMg": 15
+        }
+      ],
+      "totalKcal": 830,
+      "totalProteinG": 44,
+      "totalCarbG": 80,
+      "totalFatG": 40,
+      "totalCholesterolMg": 162,
+      "photoNote": "灰雲石枱面；綠色長方形外賣盒：左面幾塊連黃皮白切海南雞，右面一大堆油光偏黃雞飯，中間青瓜片裝飾。細圓透明盒裝深棗紅色辣椒薑蓉，放喺反轉透明蓋上面。後面黑色圓盒連透明蓋（當清雞湯）。遮同腳入鏡唔計。",
+      "source": "chat",
+      "notes": "由餐相估算外賣海南雞飯套餐。油飯同雞皮拉高脂肪；膽固醇中等，低過今日午餐三文魚籽套餐。"
+    },
     {
       "id": "food-20260827-lunch-seafood-don",
       "eatenAt": "2026-08-27T13:34:00+08:00",
