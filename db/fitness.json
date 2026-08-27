@@ -1,7 +1,30 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T22:06:00+08:00",
+  "updatedAt": "2026-08-27T20:50:00+08:00",
   "records": [
+    {
+      "id": "fit-20260827-walk-hiulai",
+      "trainedAt": "2026-08-27T20:40:00+08:00",
+      "date": "2026-08-27",
+      "type": "cardio",
+      "title": "步行（海濱→曉麗苑）",
+      "durationMin": 40,
+      "kcalBurned": 230,
+      "exercises": [
+        {
+          "name": "步行",
+          "sets": null,
+          "reps": null,
+          "weightKg": null,
+          "durationMin": 40,
+          "muscleGroups": ["calves", "quads", "glutes"],
+          "notes": "觀塘海濱行返秀茂坪曉麗苑，上斜約 3km"
+        }
+      ],
+      "muscleGroups": ["calves", "quads", "glutes"],
+      "source": "chat",
+      "notes": "用戶話由海濱行返曉麗苑；按觀塘海濱至曉麗苑上斜估算，無 GPS。"
+    },
     {
       "id": "fit-20260826-upper",
       "trainedAt": "2026-08-26T22:06:00+08:00",
