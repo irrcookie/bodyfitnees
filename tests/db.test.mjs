@@ -63,6 +63,8 @@ test("iPhone Web App meta", () => {
   assert.equal(js.includes("快速輸入"), false);
   assert.equal(js.includes("存訓練"), false);
   assert.match(js, /肌群力量/);
+  assert.match(js, /day-timeline/);
+  assert.equal(js.includes("最近紀錄"), false);
   assert.match(fs.readFileSync("assets/js/meal-tone.js", "utf8"), /meal-card-good/);
   assert.match(fs.readFileSync("assets/css/app.css", "utf8"), /meal-card-warn/);
 });

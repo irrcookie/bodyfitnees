@@ -50,7 +50,7 @@ function fmt(n) {
   return Number(n).toLocaleString("zh-HK", { maximumFractionDigits: 0 });
 }
 
-export function kcalIntakeCard({ eaten = 0, burned = 0, target = 2200 } = {}) {
+export function kcalIntakeCard({ eaten = 0, burned = 0, target = 2200, selected = false } = {}) {
   const eat = Math.max(0, Number(eaten) || 0);
   const burn = Math.max(0, Number(burned) || 0);
   const capBurn = Math.min(burn, eat);
@@ -74,8 +74,8 @@ export function kcalIntakeCard({ eaten = 0, burned = 0, target = 2200 } = {}) {
         <span><i class="dot" style="background:${BURN_COLOR}"></i>訓練消耗</span>
       </div>`
     : `<div class="fine">已攝取 / 每日參考</div>`;
-  return `<article class="card intake-card kcal-card ${over ? "over" : ""} ${hasBurn ? "has-burn" : ""}">
-    <div class="section-title" style="margin-top:0">卡路里攝取量<span>參考 ${fmt(target)} kcal${over ? " · 超標" : ""}</span></div>
+  return `<article class="card intake-card kcal-card metric-tap ${over ? "over" : ""} ${hasBurn ? "has-burn" : ""} ${selected ? "is-selected" : ""}" data-metric="kcal" role="button" tabindex="0" aria-pressed="${selected ? "true" : "false"}">
+    <div class="section-title" style="margin-top:0">卡路里攝取量<span>參考 ${fmt(target)} kcal${over ? " · 超標" : ""}${selected ? " · 趨勢" : ""}</span></div>
     <div class="stat-row">
       ${kcalRing(eatPct, burnPct)}
       <div>

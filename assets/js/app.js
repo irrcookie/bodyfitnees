@@ -7,17 +7,23 @@ import {
   sum,
   daysUntil,
   weekdayHK,
-  currentMealSlot,
   mealLabel,
   statusTone,
   hkDate,
   hkTime,
 } from "./store.js";
-import { sparkline, ring, composition } from "./charts.js";
+import { sparkline, baselineTrend, ring, composition } from "./charts.js";
 import { mealHealth } from "./meal-tone.js";
 import { muscleStats } from "./muscles.js";
 import { renderBodyMap } from "./body-map.js";
 import { kcalIntakeCard, totalTrainKcal, sessionKcal } from "./kcal-burn.js";
+import {
+  FOOD_METRICS,
+  FOOD_TIME_BANDS,
+  dailyFoodSeries,
+  formatHkHm,
+  recordsByTimeBand,
+} from "./food-day.js";
 
 const $ = (id) => document.getElementById(id);
 const routes = ["food", "body", "train"];
@@ -25,6 +31,7 @@ let db = null;
 let route = "food";
 let bodyView = "front";
 let selectedMuscle = "chest";
+let foodTrendMetric = "kcal";
 
 function standalone() {
   return window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
@@ -79,11 +86,14 @@ function mealLogged(slot) {
   return todayFood().some((r) => r.meal === slot);
 }
 
-function intakeCard(title, current, target, unit, color) {
+function intakeCard(title, current, target, unit, color, { metric = "", selected = false } = {}) {
   const pct = target ? Math.min(100, (current / target) * 100) : 0;
   const over = target ? current > target : false;
-  return `<article class="card intake-card ${over ? "over" : ""}">
-    <div class="section-title" style="margin-top:0">${title}<span>參考 ${fmt(target, 0)} ${unit}${over ? " · 超標" : ""}</span></div>
+  const attrs = metric
+    ? `data-metric="${metric}" role="button" tabindex="0" aria-pressed="${selected ? "true" : "false"}"`
+    : "";
+  return `<article class="card intake-card ${over ? "over" : ""} ${metric ? "metric-tap" : ""} ${selected ? "is-selected" : ""}" ${attrs}>
+    <div class="section-title" style="margin-top:0">${title}<span>參考 ${fmt(target, 0)} ${unit}${over ? " · 超標" : ""}${selected ? " · 趨勢" : ""}</span></div>
     <div class="stat-row">
       ${ring(pct, unit, color)}
       <div>
@@ -181,55 +191,69 @@ function renderFood() {
   const chol = sum(today, "totalCholesterolMg");
   const weightKg = latest(db.body.records)?.weightKg || db.profile.goal.targetWeightKg || 72.7;
   const burned = totalTrainKcal(todayTrain(), weightKg);
-  const byMeal = ["breakfast", "lunch", "dinner", "snack"].map((id) => ({
-    id,
-    rec: today.find((r) => r.meal === id),
-  }));
-  const history = db.food.records.slice(0, 12);
+  const metric = FOOD_METRICS[foodTrendMetric] || FOOD_METRICS.kcal;
+  const target = Number(p[metric.targetKey]) || 0;
+  const series = dailyFoodSeries(db.food.records, { endDate: hkDate() });
+  const values = series.map((row) => row[metric.key]);
+  const last = series.at(-1);
+  const lastVal = last ? last[metric.key] : 0;
+  const vs = target ? lastVal - target : 0;
+  const vsLabel =
+    !series.length || !target
+      ? "未有對照"
+      : vs > 0
+        ? `今日高過目標 ${fmt(vs, 0)} ${metric.unit}`
+        : vs < 0
+          ? `今日低過目標 ${fmt(Math.abs(vs), 0)} ${metric.unit}`
+          : "今日啱啱目標";
   return `
-    ${kcalIntakeCard({ eaten: kcal, burned, target: p.kcalTarget })}
-    ${intakeCard("蛋白質攝取量", protein, p.proteinG, "g", "#3dffb0")}
-    <div class="grid-2">
-      ${intakeCard("脂肪攝取量", fat, p.fatG, "g", "#ff8a3d")}
-      ${intakeCard("膽固醇攝取量", chol, p.cholesterolMg, "mg", "#ff5d73")}
+    <article class="card food-trend-card">
+      <div class="section-title" style="margin-top:0">${metric.title}趨勢<span>vs ${fmt(target, 0)} ${metric.unit}</span></div>
+      ${baselineTrend(values, target, 320, 168, { unit: metric.unit, labels: series.map((row) => row.date) })}
+      <div class="legend food-trend-legend">
+        <span><i class="dot" style="background:#ff8a3d"></i>高過目標</span>
+        <span><i class="dot" style="background:#3d9eff"></i>低過目標</span>
+        <span><i class="dot" style="background:#7ec8ff"></i>目標線</span>
+      </div>
+      <div class="fine">${vsLabel} · 撳下面數據卡切換指標</div>
+    </article>
+    <div id="foodMetrics">
+      ${kcalIntakeCard({ eaten: kcal, burned, target: p.kcalTarget, selected: foodTrendMetric === "kcal" })}
+      ${intakeCard("蛋白質攝取量", protein, p.proteinG, "g", "#3dffb0", { metric: "protein", selected: foodTrendMetric === "protein" })}
+      <div class="grid-2">
+        ${intakeCard("脂肪攝取量", fat, p.fatG, "g", "#ff8a3d", { metric: "fat", selected: foodTrendMetric === "fat" })}
+        ${intakeCard("膽固醇攝取量", chol, p.cholesterolMg, "mg", "#ff5d73", { metric: "chol", selected: foodTrendMetric === "chol" })}
+      </div>
     </div>
-    ${byMeal
-      .map(({ id, rec }) => {
-        const meal = p.meals.find((m) => m.id === id);
-        return `<article class="card meal-card ${rec ? mealHealth(rec, p).className : ""}">
-          <div class="section-title" style="margin-top:0">${meal.label}<span>${meal.remindAt || "隨時"} · ${rec ? "已入" : "未入"}</span></div>
-          ${
-            rec
-              ? mealRecordBody(rec, p)
-              : `<div class="fine">未有紀錄。喺 Cursor 對話傳餐相或文字就會入庫。</div>`
-          }
-        </article>`;
-      })
-      .join("")}
-    <div class="section-title">最近紀錄<span>綠＝高蛋白　黃＝高脂／膽固醇</span></div>
-    ${
-      history.length
-        ? history.map((r) => mealRecordCard(r, p)).join("")
-        : `<article class="card"><div class="empty">未有飲食紀錄。喺 Cursor 對話入餐就會喺呢度出現。</div></article>`
-    }
+    <div class="section-title">今日時間軸<span>綠＝高蛋白　黃＝高脂／膽固醇</span></div>
+    ${foodDayTimeline(today, p)}
   `;
 }
 
-function mealRecordBody(rec, nutrition) {
-  const health = mealHealth(rec, nutrition);
-  return `
-    <div>${rec.items?.map((i) => i.name).join("、") || rec.notes || ""}</div>
-    <div class="fine">${fmt(rec.totalKcal, 0)} kcal · 蛋白 ${fmt(rec.totalProteinG, 0)}g · 脂肪 ${fmt(rec.totalFatG, 0)}g · 膽固醇 ${fmt(rec.totalCholesterolMg, 0)}mg</div>
-    <div class="meal-tag meal-tag-${health.tone}">${health.label}</div>
-  `;
-}
-
-function mealRecordCard(rec, nutrition) {
-  const health = mealHealth(rec, nutrition);
-  return `<article class="card meal-card ${health.className}">
-    <div class="section-title" style="margin-top:0">${mealLabel(rec.meal)}<span>${rec.date}</span></div>
-    ${mealRecordBody(rec, nutrition)}
+function foodDayTimeline(records, nutrition) {
+  const groups = recordsByTimeBand(records);
+  return `<article class="day-timeline" aria-label="今日飲食時間軸">
+    ${FOOD_TIME_BANDS.map((band) => {
+      const rows = groups[band.id] || [];
+      return `<section class="time-band band-${band.id}" style="--band-flex:${band.flex}">
+        <div class="band-label">${band.label}<span>${band.hint}</span></div>
+        ${rows.map((rec) => timelineRow(rec, nutrition)).join("")}
+      </section>`;
+    }).join("")}
   </article>`;
+}
+
+function timelineRow(rec, nutrition) {
+  const health = mealHealth(rec, nutrition);
+  const names = rec.items?.map((i) => i.name).join("、") || rec.notes || "一餐";
+  return `<div class="timeline-row ${health.className}">
+    <div class="timeline-time">${formatHkHm(rec.eatenAt)}</div>
+    <div class="timeline-main">
+      <div class="timeline-name">${names}</div>
+      <div class="fine">${fmt(rec.totalKcal, 0)} kcal · 蛋白 ${fmt(rec.totalProteinG, 0)}g · 脂肪 ${fmt(rec.totalFatG, 0)}g · 膽固醇 ${fmt(rec.totalCholesterolMg, 0)}mg</div>
+      <div class="meal-tag meal-tag-${health.tone}">${health.label}</div>
+    </div>
+  </div>`;
 }
 
 function renderTrain() {
@@ -311,12 +335,14 @@ function renderTrain() {
 function render() {
   const p = db.profile;
   const b = latest(db.body.records);
+  const y = window.scrollY;
   $("greeting").textContent = `${greet()}，${p.displayName}`;
   const { days } = goalProgress(p, b);
   $("goalStrip").textContent = `肌肉型目標 · 仲有 ${days} 日到 ${p.goal.deadline} · 體脂 ${b?.bodyFatPercent ?? "—"}% → ${p.goal.targetBodyFatPercent}%`;
   $("screen").innerHTML = { body: renderBody, food: renderFood, train: renderTrain }[route]();
   document.querySelectorAll(".tab").forEach((el) => el.classList.toggle("is-active", el.dataset.route === route));
   bindPage();
+  if (route === "food") window.scrollTo(0, y);
 }
 
 function bindPage() {
@@ -338,6 +364,21 @@ function bindPage() {
     selectedMuscle = part.dataset.muscle;
     render();
     $("muscleTrend")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+  const metrics = $("foodMetrics");
+  const pickMetric = (e) => {
+    const card = e.target.closest("[data-metric]");
+    if (!card) return;
+    const next = card.dataset.metric;
+    if (!FOOD_METRICS[next] || next === foodTrendMetric) return;
+    foodTrendMetric = next;
+    render();
+  };
+  metrics?.addEventListener("click", pickMetric);
+  metrics?.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    pickMetric(e);
   });
 }
 
