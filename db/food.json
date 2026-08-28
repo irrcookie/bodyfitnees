@@ -1,7 +1,79 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-27T22:13:00+08:00",
+  "updatedAt": "2026-08-28T14:30:00+08:00",
   "records": [
+    {
+      "id": "food-20260828-lunch-beef-noodle",
+      "eatenAt": "2026-08-28T13:27:00+08:00",
+      "date": "2026-08-28",
+      "meal": "lunch",
+      "items": [
+        {
+          "name": "雙寶牛肉麵（紅燒湯、關廟麵、牛腡、牛柏葉、蘿蔔）",
+          "amount": 1,
+          "unit": "碗",
+          "kcal": 730,
+          "proteinG": 46,
+          "carbG": 80,
+          "fatG": 26,
+          "cholesterolMg": 190
+        },
+        {
+          "name": "炸豆腐拼滷火鵝腎",
+          "amount": 1,
+          "unit": "碟",
+          "kcal": 180,
+          "proteinG": 14,
+          "carbG": 8,
+          "fatG": 12,
+          "cholesterolMg": 100
+        },
+        {
+          "name": "茉莉綠茶（凍、無糖）",
+          "amount": 1,
+          "unit": "杯",
+          "kcal": 5,
+          "proteinG": 0,
+          "carbG": 1,
+          "fatG": 0,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 915,
+      "totalProteinG": 60,
+      "totalCarbG": 89,
+      "totalFatG": 38,
+      "totalCholesterolMg": 290,
+      "photoNote": "QR 帳單 odoui1.azurewebsites.net、桌號 11、落單 2026/08/28 13:27；只計分單 11-5（$102）：1×雙寶牛肉麵、配菜 B 炸豆腐拼滷火鵝腎、茉莉綠茶冷無糖 $12。餐相：黑碗紅燒雙寶牛肉麵（粗關廟麵、牛腡、牛柏葉、蘿蔔塊、蔥、深啡湯），兩格小碟滷味配醬，高杯凍淺黃茉莉綠茶。隔離碗同蛋卷碎唔計。",
+      "source": "chat",
+      "notes": "由餐相 + 帳單估算自己那份；隔離碗不計。"
+    },
+    {
+      "id": "food-20260828-breakfast-banana",
+      "eatenAt": "2026-08-28T11:00:00+08:00",
+      "date": "2026-08-28",
+      "meal": "breakfast",
+      "items": [
+        {
+          "name": "香蕉",
+          "amount": 1,
+          "unit": "隻",
+          "kcal": 105,
+          "proteinG": 1.3,
+          "carbG": 27,
+          "fatG": 0.4,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 105,
+      "totalProteinG": 1.3,
+      "totalCarbG": 27,
+      "totalFatG": 0.4,
+      "totalCholesterolMg": 0,
+      "photoNote": "淺木書枱上一隻熟黃蕉（有糖斑），筆電邊緣入鏡。無其他食物、無時間戳。",
+      "source": "chat",
+      "notes": "無時間戳，跟書架相當上午。"
+    },
     {
       "id": "food-20260827-snack-whey-75g",
       "eatenAt": "2026-08-27T22:13:00+08:00",
