@@ -1,7 +1,33 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-29T20:56:00+08:00",
+  "updatedAt": "2026-08-29T21:39:00+08:00",
   "records": [
+    {
+      "id": "food-20260829-snack-kim-bugak",
+      "eatenAt": "2026-08-29T21:39:00+08:00",
+      "date": "2026-08-29",
+      "meal": "snack",
+      "items": [
+        {
+          "name": "名仁糯米海苔米餅（오희숙 찹쌀김부각）",
+          "amount": 30,
+          "unit": "g",
+          "kcal": 150,
+          "proteinG": 3,
+          "carbG": 18,
+          "fatG": 7,
+          "cholesterolMg": 5
+        }
+      ],
+      "totalKcal": 150,
+      "totalProteinG": 3,
+      "totalCarbG": 18,
+      "totalFatG": 7,
+      "totalCholesterolMg": 5,
+      "photoNote": "袋背營養標籤：명인 오희숙 전통부각／명인 찹쌀김부각，整包 30g＝150 kcal、鈉 230mg、碳水 18g（糖 0）、脂肪 7g（反式 0、飽和 1.4g）、膽固醇 <5mg、蛋白 3g；含蝦。",
+      "source": "chat",
+      "notes": "跟袋背標籤整包 30g；膽固醇標 <5mg 記 5。牌子見 db/brands.md。"
+    },
     {
       "id": "food-20260829-dinner-mala-noodle",
       "eatenAt": "2026-08-29T20:55:00+08:00",
