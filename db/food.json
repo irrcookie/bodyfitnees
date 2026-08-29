@@ -1,7 +1,73 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-28T14:30:00+08:00",
+  "updatedAt": "2026-08-29T15:30:00+08:00",
   "records": [
+    {
+      "id": "food-20260829-lunch-burger-fries",
+      "eatenAt": "2026-08-29T15:29:00+08:00",
+      "date": "2026-08-29",
+      "meal": "lunch",
+      "items": [
+        {
+          "name": "芝麻芝士牛肉漢堡",
+          "amount": 1,
+          "unit": "個",
+          "kcal": 620,
+          "proteinG": 30,
+          "carbG": 44,
+          "fatG": 34,
+          "cholesterolMg": 90
+        },
+        {
+          "name": "粗薯條",
+          "amount": 1,
+          "unit": "份",
+          "kcal": 430,
+          "proteinG": 5,
+          "carbG": 54,
+          "fatG": 22,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "炸雞扒",
+          "amount": 4,
+          "unit": "件",
+          "kcal": 440,
+          "proteinG": 30,
+          "carbG": 22,
+          "fatG": 24,
+          "cholesterolMg": 90
+        },
+        {
+          "name": "Heinz 茄汁",
+          "amount": 1,
+          "unit": "包",
+          "kcal": 10,
+          "proteinG": 0,
+          "carbG": 2,
+          "fatG": 0,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "無糖可樂",
+          "amount": 1,
+          "unit": "罐",
+          "kcal": 0,
+          "proteinG": 0,
+          "carbG": 0,
+          "fatG": 0,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 1500,
+      "totalProteinG": 65,
+      "totalCarbG": 122,
+      "totalFatG": 80,
+      "totalCholesterolMg": 180,
+      "photoNote": "黑書枱外賣：芝麻包芝士牛肉漢堡（木籤、牛扒、黃芝士、生菜）細紙盒；透明長方盒粗薯條上面疊約 4 件金黃麵包糠炸雞扒；Heinz 茄汁一包；紅色無糖可樂罐（黑帶 SUGAR）。鍵盤滑鼠唔計。",
+      "source": "chat",
+      "notes": "由餐相估算外賣漢堡薯條套餐；罐係無糖可樂。漢堡+薯條跟表 900–1200，另加薯條上面幾件炸雞扒，脂肪同熱量偏高。"
+    },
     {
       "id": "food-20260828-lunch-beef-noodle",
       "eatenAt": "2026-08-28T13:27:00+08:00",
