@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-29T15:30:00+08:00",
+  "updatedAt": "2026-08-29T15:45:00+08:00",
   "records": [
     {
       "id": "food-20260829-lunch-burger-fries",
@@ -29,14 +29,14 @@
           "cholesterolMg": 0
         },
         {
-          "name": "炸雞扒",
+          "name": "炸軟殼蟹",
           "amount": 4,
           "unit": "件",
-          "kcal": 440,
-          "proteinG": 30,
-          "carbG": 22,
-          "fatG": 24,
-          "cholesterolMg": 90
+          "kcal": 480,
+          "proteinG": 28,
+          "carbG": 24,
+          "fatG": 28,
+          "cholesterolMg": 200
         },
         {
           "name": "Heinz 茄汁",
@@ -59,14 +59,14 @@
           "cholesterolMg": 0
         }
       ],
-      "totalKcal": 1500,
-      "totalProteinG": 65,
-      "totalCarbG": 122,
-      "totalFatG": 80,
-      "totalCholesterolMg": 180,
-      "photoNote": "黑書枱外賣：芝麻包芝士牛肉漢堡（木籤、牛扒、黃芝士、生菜）細紙盒；透明長方盒粗薯條上面疊約 4 件金黃麵包糠炸雞扒；Heinz 茄汁一包；紅色無糖可樂罐（黑帶 SUGAR）。鍵盤滑鼠唔計。",
+      "totalKcal": 1540,
+      "totalProteinG": 63,
+      "totalCarbG": 124,
+      "totalFatG": 84,
+      "totalCholesterolMg": 290,
+      "photoNote": "黑書枱外賣：芝麻包芝士牛肉漢堡（木籤、牛扒、黃芝士、生菜）細紙盒；透明長方盒粗薯條上面疊約 4 件金黃麵包糠炸軟殼蟹；Heinz 茄汁一包；紅色無糖可樂罐（黑帶 SUGAR）。鍵盤滑鼠唔計。",
       "source": "chat",
-      "notes": "由餐相估算外賣漢堡薯條套餐；罐係無糖可樂。漢堡+薯條跟表 900–1200，另加薯條上面幾件炸雞扒，脂肪同熱量偏高。"
+      "notes": "由餐相估算外賣漢堡薯條套餐；罐係無糖可樂。漢堡+薯條跟表 900–1200，薯條上面幾件用家更正為炸軟殼蟹（唔係雞扒），脂肪、熱量同膽固醇偏高。"
     },
     {
       "id": "food-20260828-lunch-beef-noodle",
