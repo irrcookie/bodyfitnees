@@ -1,7 +1,83 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-29T15:45:00+08:00",
+  "updatedAt": "2026-08-29T20:56:00+08:00",
   "records": [
+    {
+      "id": "food-20260829-dinner-mala-noodle",
+      "eatenAt": "2026-08-29T20:55:00+08:00",
+      "date": "2026-08-29",
+      "meal": "dinner",
+      "items": [
+        {
+          "name": "麻辣湯底",
+          "amount": 350,
+          "unit": "ml",
+          "kcal": 300,
+          "proteinG": 5,
+          "carbG": 10,
+          "fatG": 28,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "紅薯粉",
+          "amount": 200,
+          "unit": "g",
+          "kcal": 240,
+          "proteinG": 1,
+          "carbG": 58,
+          "fatG": 0,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "豬紅",
+          "amount": 120,
+          "unit": "g",
+          "kcal": 80,
+          "proteinG": 18,
+          "carbG": 1,
+          "fatG": 1,
+          "cholesterolMg": 190
+        },
+        {
+          "name": "豬頸肉",
+          "amount": 100,
+          "unit": "g",
+          "kcal": 270,
+          "proteinG": 20,
+          "carbG": 1,
+          "fatG": 21,
+          "cholesterolMg": 75
+        },
+        {
+          "name": "蔥",
+          "amount": 15,
+          "unit": "g",
+          "kcal": 5,
+          "proteinG": 0,
+          "carbG": 1,
+          "fatG": 0,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "凍檸茶走甜",
+          "amount": 400,
+          "unit": "ml",
+          "kcal": 10,
+          "proteinG": 0,
+          "carbG": 2,
+          "fatG": 0,
+          "cholesterolMg": 0
+        }
+      ],
+      "totalKcal": 905,
+      "totalProteinG": 44,
+      "totalCarbG": 73,
+      "totalFatG": 50,
+      "totalCholesterolMg": 265,
+      "photoNote": "黑膠外賣碗俯拍：不透明橙紅麻辣湯、表面紅油珠；左邊至少三塊深紫紅長方豬紅；上方幾片燒豬頸肉（白脂肪同焦邊）；蔥花撒面；金屬筷子斜插碗內。紅薯粉浸喺湯底睇唔清。凍檸茶走甜文字有講但無入鏡。鍵盤、Tempo 紙巾唔計。",
+      "source": "chat",
+      "notes": "由餐相+文字估算；凍檸茶走甜無入鏡。餐廳一份麻辣紅薯粉碗常見 750–950 kcal；麻辣油同肥豬頸肉拉高脂肪，豬紅蛋白尚可、膽固醇中等。"
+    },
     {
       "id": "food-20260829-lunch-burger-fries",
       "eatenAt": "2026-08-29T15:29:00+08:00",
