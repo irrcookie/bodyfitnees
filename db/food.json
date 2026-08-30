@@ -1,7 +1,43 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-29T21:39:00+08:00",
+  "updatedAt": "2026-08-30T14:18:00+08:00",
   "records": [
+    {
+      "id": "food-20260830-lunch-hamburg-rice",
+      "eatenAt": "2026-08-30T14:18:00+08:00",
+      "date": "2026-08-30",
+      "meal": "lunch",
+      "items": [
+        {
+          "name": "白飯",
+          "amount": 220,
+          "unit": "g",
+          "kcal": 310,
+          "proteinG": 6,
+          "carbG": 68,
+          "fatG": 1,
+          "cholesterolMg": 0
+        },
+        {
+          "name": "照燒漢堡扒（豬牛絞）",
+          "amount": 190,
+          "unit": "g",
+          "kcal": 440,
+          "proteinG": 30,
+          "carbG": 16,
+          "fatG": 30,
+          "cholesterolMg": 95
+        }
+      ],
+      "totalKcal": 750,
+      "totalProteinG": 36,
+      "totalCarbG": 84,
+      "totalFatG": 31,
+      "totalCholesterolMg": 95,
+      "photoNote": "透明圓外賣碗俯拍：白飯底、一塊厚圓形照燒漢堡扒（表面焦糖釉、邊緣肉色偏淺粉褐似豬牛絞），醬汁滲落飯；隔離盒啡米／雜糧、膠蓋、木棒、鍵盤同枱面雜物唔計。",
+      "source": "chat",
+      "notes": "由餐相估算外賣白飯加肉扒；隔離盒唔計。餐廳漢堡扒飯常見 650–850 kcal；豬牛絞扒同照燒糖醬拉高脂肪。"
+    },
     {
       "id": "food-20260829-snack-kim-bugak",
       "eatenAt": "2026-08-29T21:39:00+08:00",
