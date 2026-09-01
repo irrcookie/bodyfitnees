@@ -1,7 +1,33 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-30T14:18:00+08:00",
+  "updatedAt": "2026-09-01T10:11:00+08:00",
   "records": [
+    {
+      "id": "food-20260901-breakfast-onigiri",
+      "eatenAt": "2026-09-01T10:11:00+08:00",
+      "date": "2026-09-01",
+      "meal": "breakfast",
+      "items": [
+        {
+          "name": "7-SELECT 香蔥赤雞醬油飯糰",
+          "amount": 100,
+          "unit": "g",
+          "kcal": 187,
+          "proteinG": 5.1,
+          "carbG": 31.3,
+          "fatG": 4.6,
+          "cholesterolMg": 25
+        }
+      ],
+      "totalKcal": 187,
+      "totalProteinG": 5.1,
+      "totalCarbG": 31.3,
+      "totalFatG": 4.6,
+      "totalCholesterolMg": 25,
+      "photoNote": "袋面+袋背：7-SELECT 三角飯糰；袋面印香蔥赤蝦醬油、選用日本米、金黃蔥同粉紅蝦圖；袋背法定品名 7-SELECT 香蔥赤雞醬油飯糰，淨重 100g，條碼 4891525035570，此日期 01/09/26；每 100g：187 kcal、蛋白 5.1g、脂肪 4.6g（飽和 0.7、反式 0）、碳水 31.3g（糖 3.2）、鈉 588mg。",
+      "source": "chat",
+      "notes": "跟袋背 100g 標籤整粒食晒。袋面赤蝦、袋背赤雞＋成分有雞肉同蛋，跟袋背法定品名。香港標籤無膽固醇，按雞肉+蛋餡估約 25mg。牌子見 db/brands.md。"
+    },
     {
       "id": "food-20260830-lunch-hamburg-rice",
       "eatenAt": "2026-08-30T14:18:00+08:00",
